@@ -32,14 +32,17 @@ public class QuiltLoadingScreen {
         this.client = client;
     }
 
-    public void updatePatches(MatrixStack matrices, float delta) {
+    public void updatePatches(MatrixStack matrices, float delta, boolean ending) {
         for (FallingPatch patch : fallingPatches) {
+            if (ending)
+                patch.fallSpeed *= 1.0 + delta / 3;
+
             patch.update(delta);
         }
 
         patchTimer -= delta;
 
-        if (patchTimer < 0f) {
+        if (patchTimer < 0f && !ending) {
             fallingPatches.add(new FallingPatch(
                     random.nextDouble() * this.client.getWindow().getScaledWidth(), -PATCH_SIZE, 0,
                     (random.nextDouble() - 0.5) * 0.6,
@@ -53,10 +56,10 @@ public class QuiltLoadingScreen {
         }
     }
 
-    public void renderPatches(MatrixStack matrices, float delta) {
+    public void renderPatches(MatrixStack matrices, float delta, boolean ending) {
         // spike prevention
         if (delta < 2.0f)
-            updatePatches(matrices, delta);
+            updatePatches(matrices, delta, ending);
 
         client.getTextureManager().bindTexture(PATCH_TEXTURE);
 
@@ -69,8 +72,10 @@ public class QuiltLoadingScreen {
         private double x, y, rot;
         private final int type;
 
-        private final double horizontal, fallSpeed, rotSpeed;
+        private final double horizontal, rotSpeed;
         private final double scale;
+
+        public double fallSpeed;
 
         public FallingPatch(double x, double y, double rot, double horizontal, double fallSpeed, double rotSpeed, double scale, int type) {
             this.x = x;

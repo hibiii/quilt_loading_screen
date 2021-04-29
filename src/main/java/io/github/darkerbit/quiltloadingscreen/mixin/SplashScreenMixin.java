@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -43,12 +44,14 @@ public abstract class SplashScreenMixin extends Overlay {
         return (in & (0xFF << 24) | QuiltLoadingScreen.BACKGROUND_COLOR); // Use existing transparency
     }
 
-    // Render before first texture draw, which is already set up with anti-aliasing and transparency
+    // Render before first texture draw to render before the logo
     @Inject(
             method = "render(Lnet/minecraft/client/util/math/MatrixStack;IIF)V",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;getTextureManager()Lnet/minecraft/client/texture/TextureManager;")
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;getTextureManager()Lnet/minecraft/client/texture/TextureManager;"),
+            locals = LocalCapture.CAPTURE_FAILSOFT
     )
-    private void renderPatches(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        quiltLoadingScreen$loadingScreen.renderPatches(matrices, delta);
+    private void renderPatches(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci,
+                               int i, int j, long l, float f) {
+        quiltLoadingScreen$loadingScreen.renderPatches(matrices, delta, f >= 1.0f);
     }
 }

@@ -9,6 +9,7 @@ import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Quaternion;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class QuiltLoadingScreen {
     public static final int BACKGROUND_COLOR = BackgroundHelper.ColorMixer.getArgb(0, 35, 22, 56);
@@ -21,28 +22,41 @@ public class QuiltLoadingScreen {
 
     private final MinecraftClient client;
 
+    private final Random random = new Random();
+
     private final ArrayList<FallingPatch> fallingPatches = new ArrayList<>();
 
-    // TODO: Create system for endless patches
-    private boolean init = true;
+    private float patchTimer = 0f;
 
     public QuiltLoadingScreen(MinecraftClient client) {
         this.client = client;
     }
 
     public void updatePatches(MatrixStack matrices, float delta) {
-        if (init) {
-            fallingPatches.add(new FallingPatch(64, -PATCH_SIZE, 0, 0.3f, 2.0f, 2.0f, 7));
-            init = false;
-        }
-
         for (FallingPatch patch : fallingPatches) {
             patch.update(delta);
+        }
+
+        patchTimer -= delta;
+
+        if (patchTimer < 0f) {
+            fallingPatches.add(new FallingPatch(
+                    random.nextDouble() * this.client.getWindow().getScaledWidth(), -PATCH_SIZE, 0,
+                    (random.nextDouble() - 0.5) * 0.6,
+                    random.nextDouble() * 3.0 + 1.0,
+                    (random.nextDouble() - 0.5) * 6.0,
+                    random.nextDouble() / 2 + 0.5,
+                    random.nextInt(8)
+            ));
+
+            patchTimer = random.nextFloat();
         }
     }
 
     public void renderPatches(MatrixStack matrices, float delta) {
-        updatePatches(matrices, delta);
+        // spike prevention
+        if (delta < 2.0f)
+            updatePatches(matrices, delta);
 
         client.getTextureManager().bindTexture(PATCH_TEXTURE);
 
@@ -56,8 +70,9 @@ public class QuiltLoadingScreen {
         private final int type;
 
         private final double horizontal, fallSpeed, rotSpeed;
+        private final double scale;
 
-        public FallingPatch(double x, double y, double rot, double horizontal, double fallSpeed, double rotSpeed, int type) {
+        public FallingPatch(double x, double y, double rot, double horizontal, double fallSpeed, double rotSpeed, double scale, int type) {
             this.x = x;
             this.y = y;
             this.rot = rot;
@@ -65,6 +80,8 @@ public class QuiltLoadingScreen {
             this.horizontal = horizontal;
             this.fallSpeed = fallSpeed;
             this.rotSpeed = rotSpeed;
+
+            this.scale = scale;
 
             this.type = type;
         }
@@ -82,6 +99,7 @@ public class QuiltLoadingScreen {
 
             Matrix4f matrix = matrices.peek().getModel();
             matrix.multiply(new Quaternion(0.0f, 0.0f, (float) rot, true));
+            matrix.multiply(Matrix4f.scale((float) scale, (float) scale, (float) scale));
 
             double x1 = -PATCH_SIZE / (double) 2;
             double y1 = -PATCH_SIZE / (double) 2;

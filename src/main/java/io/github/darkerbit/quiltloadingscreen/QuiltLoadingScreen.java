@@ -18,7 +18,7 @@ public class QuiltLoadingScreen {
             new Identifier("quilt-loading-screen", "textures/gui/patch.png");
 
     private static final int PATCH_SIZE = 24;
-    private static final int PATCH_COUNT = 8;
+    private static final int PATCH_COUNT = 16;
 
     private final MinecraftClient client;
 
@@ -30,6 +30,19 @@ public class QuiltLoadingScreen {
 
     public QuiltLoadingScreen(MinecraftClient client) {
         this.client = client;
+
+        createPatch(8);
+    }
+
+    public void createPatch(int type) {
+        fallingPatches.add(new FallingPatch(
+                random.nextDouble() * this.client.getWindow().getScaledWidth(), -PATCH_SIZE, 0,
+                (random.nextDouble() - 0.5) * 0.6,
+                random.nextDouble() * 3.0 + 1.0,
+                (random.nextDouble() - 0.5) * 6.0,
+                random.nextDouble() / 2 + 0.5,
+                type
+        ));
     }
 
     public void updatePatches(MatrixStack matrices, float delta, boolean ending) {
@@ -43,14 +56,7 @@ public class QuiltLoadingScreen {
         patchTimer -= delta;
 
         if (patchTimer < 0f && !ending) {
-            fallingPatches.add(new FallingPatch(
-                    random.nextDouble() * this.client.getWindow().getScaledWidth(), -PATCH_SIZE, 0,
-                    (random.nextDouble() - 0.5) * 0.6,
-                    random.nextDouble() * 3.0 + 1.0,
-                    (random.nextDouble() - 0.5) * 6.0,
-                    random.nextDouble() / 2 + 0.5,
-                    random.nextInt(8)
-            ));
+            createPatch(random.nextInt(8));
 
             patchTimer = random.nextFloat();
         }

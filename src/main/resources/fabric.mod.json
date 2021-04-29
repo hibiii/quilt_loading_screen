@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Quilt Loading Screen",
-  "description": "Makes loading screen look like the banner of the QuiltMC Community Server.",
+  "description": "Makes Minecraft loading screen look like the banner of the QuiltMC Community Server.",
   "authors": [
     "darkerbit"
   ],

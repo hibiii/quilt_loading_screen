@@ -24,6 +24,8 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
+	modRuntime "io.github.prospector:modmenu:1.14.9+build.14"
+
 	// doesn't use fabric api
 
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.

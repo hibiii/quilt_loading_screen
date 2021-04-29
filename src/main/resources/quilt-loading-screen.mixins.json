@@ -6,8 +6,8 @@
   "mixins": [
   ],
   "client": [
-    "SplashScreenMixin",
-    "DrawableHelperAccessor"
+    "DrawableHelperAccessor",
+    "SplashScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

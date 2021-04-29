@@ -1,9 +1,5 @@
-# Fabric Example Mod
+# Quilt Loading Screen
 
-## Setup
+![Licensed under MIT](https://img.shields.io/badge/license-MIT-informational) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/darkerbit/quilt-loading-screen/build)
 
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
-
-## License
-
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+Makes loading screen look like the banner of the QuiltMC Community Server.

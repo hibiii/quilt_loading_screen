@@ -20,10 +20,5 @@
   },
   "mixins": [
     "quilt-loading-screen.mixins.json"
-  ],
-
-  "depends": {
-    "fabricloader": ">=0.7.4",
-    "minecraft": "1.16.5"
-  }
+  ]
 }

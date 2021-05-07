@@ -31,7 +31,7 @@ public class QuiltLoadingScreen {
     public QuiltLoadingScreen(MinecraftClient client) {
         this.client = client;
 
-        createPatch(8);
+        createPatch(8); // summons the holy pineapple
     }
 
     public void createPatch(int type) {

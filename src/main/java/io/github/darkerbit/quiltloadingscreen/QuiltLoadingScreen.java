@@ -1,5 +1,6 @@
 package io.github.darkerbit.quiltloadingscreen;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.darkerbit.quiltloadingscreen.mixin.DrawableHelperAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.BackgroundHelper;
@@ -67,7 +68,10 @@ public class QuiltLoadingScreen {
         if (delta < 2.0f)
             updatePatches(matrices, delta, ending);
 
-        client.getTextureManager().bindTexture(PATCH_TEXTURE);
+        RenderSystem.setShaderTexture(0, PATCH_TEXTURE);
+        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
 
         for (FallingPatch patch : fallingPatches) {
             patch.render(matrices);

@@ -74,7 +74,7 @@ public class QuiltLoadingScreen {
         RenderSystem.defaultBlendFunc();
 
         for (FallingPatch patch : fallingPatches) {
-            patch.render(matrices);
+            patch.render(matrices, client.options.monochromeLogo);
         }
     }
 
@@ -108,7 +108,7 @@ public class QuiltLoadingScreen {
             rot += rotSpeed * delta;
         }
 
-        public void render(MatrixStack matrices) {
+        public void render(MatrixStack matrices, boolean monochrome) {
             matrices.push();
             matrices.translate(x, y, 0);
 
@@ -124,10 +124,12 @@ public class QuiltLoadingScreen {
             float u0 = 1.0f / PATCH_COUNT * type;
             float u1 = u0 + 1.0f / PATCH_COUNT;
 
+            float offset = monochrome ? 0.5f : 0.0f;
+
             DrawableHelperAccessor.quiltLoadingScreen$drawTexturedQuad(
                     matrix,
                     (int) x1, (int) x2, (int) y1, (int) y2, 0,
-                    u0, u1, 0.0f, 0.5f
+                    u0, u1, 0.0f + offset, 0.5f + offset
             );
 
             matrices.pop();

@@ -41,6 +41,9 @@ public abstract class SplashScreenMixin extends Overlay {
             index = 5
     )
     private int changeColor(int in) {
+        if (this.client.options.monochromeLogo)
+            return in;
+
         return (in & (0xFF << 24) | QuiltLoadingScreen.BACKGROUND_COLOR); // Use existing transparency
     }
 

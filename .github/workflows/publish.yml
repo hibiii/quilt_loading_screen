@@ -22,5 +22,5 @@ jobs:
       - name: publish
         run: ./gradlew publishModrinth
         env:
-          MODRINTH: ${{ secrets.modrinth }}
+          MODRINTH: ${{ secrets.MODRINTH }}
 

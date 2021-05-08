@@ -47,10 +47,10 @@ public abstract class SplashScreenMixin extends Overlay {
         return (in & (0xFF << 24) | QuiltLoadingScreen.BACKGROUND_COLOR); // Use existing transparency
     }
 
-    // Render before first texture set to render before the logo
+    // Render before third getWindow to render before the logo
     @Inject(
             method = "render(Lnet/minecraft/client/util/math/MatrixStack;IIF)V",
-            at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderTexture(ILnet/minecraft/util/Identifier;)V", remap = false),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;getWindow()Lnet/minecraft/client/util/Window;", ordinal = 2),
             locals = LocalCapture.CAPTURE_FAILSOFT
     )
     private void renderPatches(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci,

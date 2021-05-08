@@ -50,7 +50,7 @@ public abstract class SplashScreenMixin extends Overlay {
     // Render before first texture set to render before the logo
     @Inject(
             method = "render(Lnet/minecraft/client/util/math/MatrixStack;IIF)V",
-            at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderTexture(ILnet/minecraft/util/Identifier;)V"),
+            at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderTexture(ILnet/minecraft/util/Identifier;)V", remap = false),
             locals = LocalCapture.CAPTURE_FAILSOFT
     )
     private void renderPatches(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci,

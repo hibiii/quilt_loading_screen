@@ -127,7 +127,7 @@ public class QuiltLoadingScreen {
             DrawableHelperAccessor.quiltLoadingScreen$drawTexturedQuad(
                     matrix,
                     (int) x1, (int) x2, (int) y1, (int) y2, 0,
-                    u0, u1, 0.0f, 1.0f
+                    u0, u1, 0.0f, 0.5f
             );
 
             matrices.pop();

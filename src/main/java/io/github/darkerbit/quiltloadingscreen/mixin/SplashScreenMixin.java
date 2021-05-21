@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
@@ -23,6 +24,11 @@ public abstract class SplashScreenMixin extends Overlay {
     @Final
     @Shadow
     private MinecraftClient client;
+
+    @Shadow
+    private static int withAlpha(int color, int alpha) {
+        throw new UnsupportedOperationException("Shadowed method somehow called outside mixin. Exorcise your computer.");
+    }
 
     private QuiltLoadingScreen quiltLoadingScreen$loadingScreen;
 
@@ -44,7 +50,17 @@ public abstract class SplashScreenMixin extends Overlay {
         if (this.client.options.monochromeLogo)
             return in;
 
-        return (in & (0xFF << 24) | QuiltLoadingScreen.BACKGROUND_COLOR); // Use existing transparency
+        return withAlpha(QuiltLoadingScreen.BACKGROUND_COLOR, in >> 24); // Use existing transparency
+    }
+
+    // For some reason Mojang decided to not use `fill` in a specific case so I have to replace a local variable
+    @ModifyVariable(
+            method = "render(Lnet/minecraft/client/util/math/MatrixStack;IIF)V",
+            at = @At(value = "INVOKE_ASSIGN", target = "Ljava/util/function/IntSupplier;getAsInt()I", ordinal = 2),
+            ordinal = 4 // int m (or int o according to mixin apparently)
+    )
+    private int changeColorGl(int in) {
+        return this.client.options.monochromeLogo ? in : QuiltLoadingScreen.BACKGROUND_COLOR;
     }
 
     // Render before third getWindow to render before the logo

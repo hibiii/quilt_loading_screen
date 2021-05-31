@@ -40,7 +40,7 @@ public class QuiltLoadingScreen {
     public QuiltLoadingScreen(MinecraftClient client) {
         this.client = client;
 
-        prideMonth = LocalDate.now().getMonth() == Month.MAY;
+        prideMonth = LocalDate.now().getMonth() == Month.JUNE;
 
         patchSize = prideMonth ? 20 : 24;
 

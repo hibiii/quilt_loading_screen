@@ -8,6 +8,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Quaternion;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -17,8 +19,12 @@ public class QuiltLoadingScreen {
     private static final Identifier PATCH_TEXTURE =
             new Identifier("quilt-loading-screen", "textures/gui/patch.png");
 
-    private static final int PATCH_SIZE = 24;
+    private static final Identifier PRIDE_TEXTURE =
+            new Identifier("quilt-loading-screen", "textures/gui/community_quilt.png");
+
     private static final int PATCH_COUNT = 16;
+
+    private final int patchSize;
 
     private final MinecraftClient client;
 
@@ -28,20 +34,26 @@ public class QuiltLoadingScreen {
 
     private float patchTimer = 0f;
 
+    private final boolean prideMonth;
+
     public QuiltLoadingScreen(MinecraftClient client) {
         this.client = client;
 
-        createPatch(8); // summons the holy pineapple
+        prideMonth = LocalDate.now().getMonth() == Month.JUNE;
+
+        patchSize = prideMonth ? 20 : 24;
+
+        createPatch(prideMonth ? 12 : 8); // summons the holy pineapple
     }
 
     public void createPatch(int type) {
         fallingPatches.add(new FallingPatch(
-                random.nextDouble() * this.client.getWindow().getScaledWidth(), -PATCH_SIZE, 0,
+                random.nextDouble() * this.client.getWindow().getScaledWidth(), -patchSize, 0,
                 (random.nextDouble() - 0.5) * 0.6,
                 random.nextDouble() * 3.0 + 1.0,
                 (random.nextDouble() - 0.5) * 6.0,
                 random.nextDouble() / 2 + 0.5,
-                type
+                type, patchSize
         ));
     }
 
@@ -56,7 +68,7 @@ public class QuiltLoadingScreen {
         patchTimer -= delta;
 
         if (patchTimer < 0f && !ending) {
-            createPatch(random.nextInt(8));
+            createPatch(random.nextInt(prideMonth ? 12 : 8));
 
             patchTimer = random.nextFloat();
         }
@@ -67,7 +79,7 @@ public class QuiltLoadingScreen {
         if (delta < 2.0f)
             updatePatches(matrices, delta, ending);
 
-        client.getTextureManager().bindTexture(PATCH_TEXTURE);
+        client.getTextureManager().bindTexture(prideMonth ? PRIDE_TEXTURE : PATCH_TEXTURE);
 
         for (FallingPatch patch : fallingPatches) {
             patch.render(matrices);
@@ -83,7 +95,9 @@ public class QuiltLoadingScreen {
 
         public double fallSpeed;
 
-        public FallingPatch(double x, double y, double rot, double horizontal, double fallSpeed, double rotSpeed, double scale, int type) {
+        private int patchSize;
+
+        public FallingPatch(double x, double y, double rot, double horizontal, double fallSpeed, double rotSpeed, double scale, int type, int patchSize) {
             this.x = x;
             this.y = y;
             this.rot = rot;
@@ -95,6 +109,8 @@ public class QuiltLoadingScreen {
             this.scale = scale;
 
             this.type = type;
+
+            this.patchSize = patchSize;
         }
 
         public void update(float delta) {
@@ -112,10 +128,10 @@ public class QuiltLoadingScreen {
             matrix.multiply(new Quaternion(0.0f, 0.0f, (float) rot, true));
             matrix.multiply(Matrix4f.scale((float) scale, (float) scale, (float) scale));
 
-            double x1 = -PATCH_SIZE / (double) 2;
-            double y1 = -PATCH_SIZE / (double) 2;
-            double x2 = PATCH_SIZE / (double) 2;
-            double y2 = PATCH_SIZE / (double) 2;
+            double x1 = -patchSize / (double) 2;
+            double y1 = -patchSize / (double) 2;
+            double x2 = patchSize / (double) 2;
+            double y2 = patchSize / (double) 2;
 
             float u0 = 1.0f / PATCH_COUNT * type;
             float u1 = u0 + 1.0f / PATCH_COUNT;

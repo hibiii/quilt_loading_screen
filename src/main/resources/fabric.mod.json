@@ -8,6 +8,9 @@
   "authors": [
     "darkerbit"
   ],
+  "contributors": [
+    "Emmaffle"
+  ],
   "contact": {
     "sources": "https://github.com/darkerbit/quilt-loading-screen"
   },
@@ -17,8 +20,12 @@
 
   "environment": "client",
   "entrypoints": {
+    "modmenu": ["io.github.darkerbit.quiltloadingscreen.ModMenuIntegration"]
   },
   "mixins": [
     "quilt-loading-screen.mixins.json"
-  ]
+  ],
+  "suggests": {
+    "modmenu": "*"
+  }
 }

@@ -15,13 +15,15 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class QuiltLoadingScreen {
+    public static final String MODID = "quilt-loading-screen";
+
     public static final int BACKGROUND_COLOR = BackgroundHelper.ColorMixer.getArgb(0, 35, 22, 56);
 
     private static final Identifier PATCH_TEXTURE =
-            new Identifier("quilt-loading-screen", "textures/gui/patch.png");
+            new Identifier(MODID, "textures/gui/patch.png");
 
     private static final Identifier PRIDE_TEXTURE =
-            new Identifier("quilt-loading-screen", "textures/gui/community_quilt.png");
+            new Identifier(MODID, "textures/gui/community_quilt.png");
 
     private static final int PATCH_COUNT = 16;
 
@@ -35,12 +37,16 @@ public class QuiltLoadingScreen {
 
     private float patchTimer = 0f;
 
-    private final boolean prideMonth;
+    private boolean prideMonth;
 
     public QuiltLoadingScreen(MinecraftClient client) {
         this.client = client;
 
         prideMonth = LocalDate.now().getMonth() == Month.JUNE;
+
+        Config.initConfig();
+
+        if (Config.isPrideQuiltsEnabled()) prideMonth = true;
 
         patchSize = prideMonth ? 20 : 24;
 

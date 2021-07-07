@@ -1,6 +1,7 @@
 package io.github.darkerbit.quiltloadingscreen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import io.github.darkerbit.quiltloadingscreen.config.Config;
 import io.github.darkerbit.quiltloadingscreen.mixin.DrawableHelperAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.BackgroundHelper;

@@ -1,8 +1,8 @@
-package io.github.darkerbit.quiltloadingscreen;
+package io.github.darkerbit.quiltloadingscreen.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
-import eu.midnightdust.lib.config.MidnightConfig;
+import io.github.darkerbit.quiltloadingscreen.QuiltLoadingScreen;
 
 public class ModMenuIntegration implements ModMenuApi {
   @Override

@@ -20,7 +20,9 @@
 
   "environment": "client",
   "entrypoints": {
-    "modmenu": ["io.github.darkerbit.quiltloadingscreen.ModMenuIntegration"]
+    "modmenu": [
+      "io.github.darkerbit.quiltloadingscreen.config.ModMenuIntegration"
+    ]
   },
   "mixins": [
     "quilt-loading-screen.mixins.json"

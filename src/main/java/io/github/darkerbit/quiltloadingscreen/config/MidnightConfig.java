@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package eu.midnightdust.lib.config;
+package io.github.darkerbit.quiltloadingscreen.config;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;

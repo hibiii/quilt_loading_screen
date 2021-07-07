@@ -1,6 +1,6 @@
-package io.github.darkerbit.quiltloadingscreen;
+package io.github.darkerbit.quiltloadingscreen.config;
 
-import eu.midnightdust.lib.config.MidnightConfig;
+import io.github.darkerbit.quiltloadingscreen.QuiltLoadingScreen;
 
 public class Config extends MidnightConfig {
   @Entry public static boolean prideQuiltsEnabled = false;

@@ -7,7 +7,7 @@
   ],
   "client": [
     "DrawableHelperAccessor",
-    "SplashScreenMixin"
+    "SplashOverlayMixin"
   ],
   "injectors": {
     "defaultRequire": 1

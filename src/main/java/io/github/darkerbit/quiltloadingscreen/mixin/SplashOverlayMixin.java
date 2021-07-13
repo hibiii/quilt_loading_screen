@@ -3,7 +3,7 @@ package io.github.darkerbit.quiltloadingscreen.mixin;
 import io.github.darkerbit.quiltloadingscreen.QuiltLoadingScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Overlay;
-import net.minecraft.client.gui.screen.SplashScreen;
+import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.resource.ResourceReload;
 import org.spongepowered.asm.mixin.Final;
@@ -19,8 +19,8 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-@Mixin(SplashScreen.class)
-public abstract class SplashScreenMixin extends Overlay {
+@Mixin(SplashOverlay.class)
+public abstract class SplashOverlayMixin extends Overlay {
     @Final
     @Shadow
     private MinecraftClient client;
@@ -43,7 +43,7 @@ public abstract class SplashScreenMixin extends Overlay {
     // Replace the colour used for the background fill of the splash screen
     @ModifyArg(
             method = "render(Lnet/minecraft/client/util/math/MatrixStack;IIF)V",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/SplashScreen;fill(Lnet/minecraft/client/util/math/MatrixStack;IIIII)V"),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/SplashOverlay;fill(Lnet/minecraft/client/util/math/MatrixStack;IIIII)V"),
             index = 5
     )
     private int changeColor(int in) {

@@ -111,12 +111,13 @@ curseforge {
 		addGameVersion "Fabric"
 		addGameVersion "Java 15"
 
-		afterEvaluate {
-			mainArtifact(remapJar)
-			uploadTask.dependsOn(remapJar)
-		}
+		mainArtifact(remapJar)
 	}
 	options {
 		forgeGradleIntegration = false
 	}
+}
+
+afterEvaluate {
+	tasks.curseforge.dependsOn remapJar
 }

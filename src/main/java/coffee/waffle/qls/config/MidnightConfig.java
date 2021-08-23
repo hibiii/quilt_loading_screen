@@ -1,7 +1,7 @@
 /*
- * MIT License
- *
- * Copyright (c) 2020 MidnightDust
+ * Copyright (c) 2021 darkerbit
+ * Copyright (c) 2021 wafflecoffee
+ * Copyright (c) 2020 TeamMidnightDust (MidnightConfig only)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,14 +22,12 @@
  * SOFTWARE.
  */
 
-package io.github.darkerbit.quiltloadingscreen.config;
+package coffee.waffle.qls.config;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -63,28 +61,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
-// MidnightConfig v1.0.4
-// Single class config library - feel free to copy!
-// Changelog:
-// - 1.0.4:
-// - Number field length is now configurable
-// - Fixed number fields being empty
-// - 1.0.3:
-// - Text field length is now configurable
-// - Better separation of client and server
-// - 1.0.2:
-// - Update to 21w20a
-// - 1.0.1:
-// - Fixed buttons not working in fullscreen
-// - 1.0.0:
-// - The config screen no longer shows the entries of all instances of MidnightConfig
-// - Compatible with servers!
-// - Scrollable!
-// - Comment support!
-// - Fresh New Design
-
-/** Based on https://github.com/Minenash/TinyConfig
- *  Credits to Minenash */
+// Based on https://github.com/Minenash/TinyConfig - Credits to Minenash
 
 @SuppressWarnings("unchecked")
 public class MidnightConfig {
@@ -100,7 +77,7 @@ public class MidnightConfig {
     Object widget;
     int width;
     int max;
-    Map.Entry<TextFieldWidget,Text> error;
+    Map.Entry<TextFieldWidget, Text> error;
     Object defaultValue;
     Object value;
     String tempValue;
@@ -108,7 +85,7 @@ public class MidnightConfig {
     String id;
   }
 
-  public static final Map<String,Class<?>> configClass = new HashMap<>();
+  public static final Map<String, Class<?>> configClass = new HashMap<>();
   private static Path path;
 
   private static final Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).excludeFieldsWithModifiers(Modifier.PRIVATE).addSerializationExclusionStrategy(new HiddenAnnotationExclusionStrategy()).setPrettyPrinting().create();
@@ -120,7 +97,7 @@ public class MidnightConfig {
     for (Field field : config.getFields()) {
       EntryInfo info = new EntryInfo();
       if (field.isAnnotationPresent(Entry.class) || field.isAnnotationPresent(Comment.class))
-        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) initClient(modid, field, info);
+        initClient(modid, field, info);
       if (field.isAnnotationPresent(Entry.class))
         try {
           info.defaultValue = field.get(null);
@@ -138,7 +115,7 @@ public class MidnightConfig {
         }
     }
   }
-  @Environment(EnvType.CLIENT)
+
   private static void initClient(String modid, Field field, EntryInfo info) {
     Class<?> type = field.getType();
     Entry e = field.getAnnotation(Entry.class);
@@ -171,7 +148,7 @@ public class MidnightConfig {
     entries.add(info);
   }
 
-  private static void textField(EntryInfo info, Function<String,Number> f, Pattern pattern, double min, double max, boolean cast) {
+  private static void textField(EntryInfo info, Function<String, Number> f, Pattern pattern, double min, double max, boolean cast) {
     boolean isNumber = pattern != null;
     info.widget = (BiFunction<TextFieldWidget, ButtonWidget, Predicate<String>>) (t, b) -> s -> {
       s = s.trim();
@@ -185,18 +162,18 @@ public class MidnightConfig {
       if (!(isNumber && s.isEmpty()) && !s.equals("-") && !s.equals(".")) {
         value = f.apply(s);
         inLimits = value.doubleValue() >= min && value.doubleValue() <= max;
-        info.error = inLimits? null : new AbstractMap.SimpleEntry<>(t, new LiteralText(value.doubleValue() < min ?
-                "§cMinimum " + (isNumber? "value" : "length") + (cast? " is " + (int)min : " is " + min) :
-                "§cMaximum " + (isNumber? "value" : "length") + (cast? " is " + (int)max : " is " + max)));
+        info.error = inLimits ? null : new AbstractMap.SimpleEntry<>(t, new LiteralText(value.doubleValue() < min ?
+                "§cMinimum " + (isNumber ? "value" : "length") + (cast ? " is " + (int) min : " is " + min) :
+                "§cMaximum " + (isNumber ? "value" : "length") + (cast ? " is " + (int) max : " is " + max)));
       }
 
       info.tempValue = s;
-      t.setEditableColor(inLimits? 0xFFFFFFFF : 0xFFFF7777);
+      t.setEditableColor(inLimits ? 0xFFFFFFFF : 0xFFFF7777);
       info.inLimits = inLimits;
       b.active = entries.stream().allMatch(e -> e.inLimits);
 
       if (inLimits)
-        info.value = isNumber? value : s;
+        info.value = isNumber ? value : s;
 
       return true;
     };
@@ -211,11 +188,11 @@ public class MidnightConfig {
       e.printStackTrace();
     }
   }
-  @Environment(EnvType.CLIENT)
+
   public static Screen getScreen(Screen parent, String modid) {
     return new MidnightConfigScreen(parent, modid);
   }
-  @Environment(EnvType.CLIENT)
+
   private static class MidnightConfigScreen extends Screen {
 
     protected MidnightConfigScreen(Screen parent, String modid) {
@@ -224,6 +201,7 @@ public class MidnightConfig {
       this.modid = modid;
       this.translationPrefix = modid + ".midnightconfig.";
     }
+
     private final String translationPrefix;
     private final Screen parent;
     private final String modid;
@@ -233,8 +211,10 @@ public class MidnightConfig {
     @Override
     public void tick() {
       for (EntryInfo info : entries)
-        try { info.field.set(null, info.value); }
-        catch (IllegalAccessException ignored) {}
+        try {
+          info.field.set(null, info.value);
+        } catch (IllegalAccessException ignored) {
+        }
     }
 
     @Override
@@ -242,8 +222,11 @@ public class MidnightConfig {
       super.init();
 
       this.addDrawableChild(new ButtonWidget(this.width / 2 - 154, this.height - 28, 150, 20, ScreenTexts.CANCEL, button -> {
-        try { gson.fromJson(Files.newBufferedReader(path), configClass.get(modid)); }
-        catch (Exception e) { write(modid); }
+        try {
+          gson.fromJson(Files.newBufferedReader(path), configClass.get(modid));
+        } catch (Exception e) {
+          write(modid);
+        }
 
         for (EntryInfo info : entries) {
           if (info.field.isAnnotationPresent(Entry.class)) {
@@ -262,7 +245,8 @@ public class MidnightConfig {
           if (info.id.equals(modid)) {
             try {
               info.field.set(null, info.value);
-            } catch (IllegalAccessException ignored) {}
+            } catch (IllegalAccessException ignored) {
+            }
           }
         write(modid);
         Objects.requireNonNull(client).setScreen(parent);
@@ -283,8 +267,9 @@ public class MidnightConfig {
 
           if (info.widget instanceof Map.Entry) {
             Map.Entry<ButtonWidget.PressAction, Function<Object, Text>> widget = (Map.Entry<ButtonWidget.PressAction, Function<Object, Text>>) info.widget;
-            if (info.field.getType().isEnum()) widget.setValue(value -> new TranslatableText(translationPrefix + "enum." + info.field.getType().getSimpleName() + "." + info.value.toString()));
-            this.list.addButton(new ButtonWidget(width - 110, 0,100, 20, widget.getValue().apply(info.value), widget.getKey()),resetButton,name);
+            if (info.field.getType().isEnum())
+              widget.setValue(value -> new TranslatableText(translationPrefix + "enum." + info.field.getType().getSimpleName() + "." + info.value.toString()));
+            this.list.addButton(new ButtonWidget(width - 110, 0, 100, 20, widget.getValue().apply(info.value), widget.getKey()), resetButton, name);
           } else if (info.widget != null) {
             TextFieldWidget widget = new TextFieldWidget(textRenderer, width - 110, 0, 100, 20, null);
             widget.setMaxLength(info.width);
@@ -294,25 +279,26 @@ public class MidnightConfig {
             this.list.addButton(widget, resetButton, name);
           } else {
             ButtonWidget dummy = new ButtonWidget(-10, 0, 0, 0, Text.of(""), null);
-            this.list.addButton(dummy,dummy,name);
+            this.list.addButton(dummy, dummy, name);
           }
         }
       }
 
     }
+
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
       this.renderBackground(matrices);
       this.list.render(matrices, mouseX, mouseY, delta);
 
       int stringWidth = (int) (title.getString().length() * 2.75f);
-      if (useTooltipForTitle) renderTooltip(matrices, title, width/2 - stringWidth, 27);
+      if (useTooltipForTitle) renderTooltip(matrices, title, width / 2 - stringWidth, 27);
       else drawCenteredText(matrices, textRenderer, title, width / 2, 15, 0xFFFFFF);
 
       for (EntryInfo info : entries) {
         if (info.id.equals(modid)) {
-          if (list.getHoveredButton(mouseX,mouseY).isPresent()) {
-            ClickableWidget buttonWidget = list.getHoveredButton(mouseX,mouseY).get();
+          if (list.getHoveredButton(mouseX, mouseY).isPresent()) {
+            ClickableWidget buttonWidget = list.getHoveredButton(mouseX, mouseY).get();
             Text text = ButtonEntry.buttonsWithText.get(buttonWidget);
             TranslatableText name = new TranslatableText(this.translationPrefix + info.field.getName());
             String key = translationPrefix + info.field.getName() + ".tooltip";
@@ -327,10 +313,10 @@ public class MidnightConfig {
           }
         }
       }
-      super.render(matrices,mouseX,mouseY,delta);
+      super.render(matrices, mouseX, mouseY, delta);
     }
   }
-  @Environment(EnvType.CLIENT)
+
   public static class MidnightConfigListWidget extends ElementListWidget<ButtonEntry> {
     TextRenderer textRenderer;
 
@@ -339,14 +325,21 @@ public class MidnightConfig {
       this.centerListVertically = false;
       textRenderer = minecraftClient.textRenderer;
     }
+
     @Override
-    public int getScrollbarPositionX() { return this.width -7; }
+    public int getScrollbarPositionX() {
+      return this.width - 7;
+    }
 
     public void addButton(ClickableWidget button, ClickableWidget resetButton, Text text) {
       this.addEntry(ButtonEntry.create(button, text, resetButton));
     }
+
     @Override
-    public int getRowWidth() { return 10000; }
+    public int getRowWidth() {
+      return 10000;
+    }
+
     public Optional<ClickableWidget> getHoveredButton(double mouseX, double mouseY) {
       for (ButtonEntry buttonEntry : this.children()) {
         for (ClickableWidget ClickableWidget : buttonEntry.buttons) {
@@ -358,6 +351,7 @@ public class MidnightConfig {
       return Optional.empty();
     }
   }
+
   public static class ButtonEntry extends ElementListWidget.Entry<ButtonEntry> {
     private static final TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
     private final List<ClickableWidget> buttons = new ArrayList<>();
@@ -367,27 +361,30 @@ public class MidnightConfig {
     public static final Map<ClickableWidget, Text> buttonsWithText = new HashMap<>();
 
     private ButtonEntry(ClickableWidget button, Text text, ClickableWidget resetButton) {
-      buttonsWithText.put(button,text);
+      buttonsWithText.put(button, text);
       this.buttons.add(button);
       this.resetButtons.add(resetButton);
       this.texts.add(text);
       this.buttonsWithResetButtons.add(button);
       this.buttonsWithResetButtons.add(resetButton);
     }
+
     public static ButtonEntry create(ClickableWidget button, Text text, ClickableWidget resetButton) {
       return new ButtonEntry(button, text, resetButton);
     }
+
     public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
       this.buttons.forEach(button -> {
         button.y = y;
         button.render(matrices, mouseX, mouseY, tickDelta);
       });
-      this.texts.forEach(text -> DrawableHelper.drawTextWithShadow(matrices,textRenderer, text,12,y+5,0xFFFFFF));
+      this.texts.forEach(text -> DrawableHelper.drawTextWithShadow(matrices, textRenderer, text, 12, y + 5, 0xFFFFFF));
       this.resetButtons.forEach((button) -> {
         button.y = y;
         button.render(matrices, mouseX, mouseY, tickDelta);
       });
     }
+
     public List<? extends Element> children() {
       return buttonsWithResetButtons;
     }
@@ -396,17 +393,27 @@ public class MidnightConfig {
       return buttonsWithResetButtons;
     }
   }
+
   @Retention(RetentionPolicy.RUNTIME)
   @Target(ElementType.FIELD)
   public @interface Entry {
     int width() default 100;
+
     double min() default Double.MIN_NORMAL;
+
     double max() default Double.MAX_VALUE;
   }
-  @Retention(RetentionPolicy.RUNTIME) @Target(ElementType.FIELD) public @interface Comment {}
+
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target(ElementType.FIELD)
+  public @interface Comment {
+  }
 
   public static class HiddenAnnotationExclusionStrategy implements ExclusionStrategy {
-    public boolean shouldSkipClass(Class<?> clazz) { return false; }
+    public boolean shouldSkipClass(Class<?> clazz) {
+      return false;
+    }
+
     public boolean shouldSkipField(FieldAttributes fieldAttributes) {
       return fieldAttributes.getAnnotation(Entry.class) == null;
     }

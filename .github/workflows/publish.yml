@@ -1,29 +1,22 @@
-name: publish
+name: Release
 on:
   push:
     tags:
       - 'v**'
 
 jobs:
-  publish:
-    runs-on: windows-latest
+  build:
+    runs-on: ubuntu-20.04
+    container:
+      image: adoptopenjdk:16-jdk
+      options: --user root
     steps:
-      - name: checkout repository
-        uses: actions/checkout@v2
-      - name: validate gradle wrapper
-        uses: gradle/wrapper-validation-action@v1
-      - name: setup jdk 16
-        uses: actions/setup-java@v1
+      - uses: actions/checkout@v2
+      - uses: gradle/wrapper-validation-action@v1
+      - uses: actions/setup-java@v2
         with:
-          distribution: 'adopt'
-          java-version: '16'
-      - name: build
-        run: ./gradlew build
-      - name: publish
-        run: ./gradlew publishModrinth
+          distribution: adopt
+          java-version: 16
+      - run: ./gradlew build modrinth
         env:
-          MODRINTH: ${{ secrets.MODRINTH }}
-      - name: curseforge
-        run: ./gradlew curseforge
-        env:
-          CURSEFORGE: ${{ secrets.CURSEFORGE }}
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}

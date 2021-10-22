@@ -1,12 +1,12 @@
-name: Release
-on: [ workflow_dispatch ]
+name: Snapshot Publish
+on:
+  push:
+    branches:
+      - 1.*
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
-    container:
-      image: adoptopenjdk:16-jdk
-      options: --user root
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: gradle/wrapper-validation-action@v1
@@ -14,8 +14,7 @@ jobs:
         with:
           distribution: adopt
           java-version: 16
-      - run: ./gradlew build modrinth publishAllPublicationsToEmmavenReleasesRepository
+      - run: ./gradlew publishAllPublicationsToEmmavenSnapshotsRepository
         env:
-          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
           MAVEN_USER: ${{ secrets.MAVEN_USER }}
           MAVEN_PASS: ${{ secrets.MAVEN_PASS }}

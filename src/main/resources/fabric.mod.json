@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "quilt-loading-screen",
-  "version": "${version}",
+  "version": "2.2.2",
   "name": "Quilt Loading Screen",
   "description": "Makes Minecraft loading screen look like the banner of the QuiltMC Community Server.",
   "authors": [

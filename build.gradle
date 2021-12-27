@@ -6,19 +6,17 @@ plugins {
   id "maven-publish"
 }
 
-boolean is_release = false
 String mod_version = loom.modVersion
 String minecraft_version = "1.17.1"
-String yarn_mappings = "62"           // https://fabricmc.net/versions.html
-String loader_version = "0.12.2"      // https://fabricmc.net/versions.html
-String fabric_version = "0.41.0+1.17" // https://fabricmc.net/versions.html
+String yarn_mappings = "63"           // https://fabricmc.net/versions.html
+String loader_version = "0.12.5"      // https://fabricmc.net/versions.html
+String fabric_version = "0.42.1+1.17" // https://fabricmc.net/versions.html
 String modmenu_version = "2.0.14"     // https://modrinth.com/mod/modmenu/versions
 
 archivesBaseName = "quilt-loading-screen"
-version = mod_version + "+" + minecraft_version + (!is_release ? "-SNAPSHOT" : "")
+version = mod_version + "+" + minecraft_version + System.getenv().SNAPSHOT
 
 repositories {
-  maven { url "https://maven.quiltmc.org/repository/release/" }
   maven { url "https://maven.terraformersmc.com" }
 }
 
@@ -26,17 +24,18 @@ dependencies {
   minecraft "com.mojang:minecraft:${minecraft_version}"
   mappings "net.fabricmc:yarn:${minecraft_version}+build.${yarn_mappings}:v2"
   modImplementation "net.fabricmc:fabric-loader:${loader_version}"
-  include(modImplementation(fabricApi.module("fabric-resource-loader-v0", fabric_version)))
+  modImplementation fabricApi.module("fabric-resource-loader-v0", fabric_version)
 
   modImplementation "com.terraformersmc:modmenu:${modmenu_version}"
 }
+
+idea { module { downloadJavadoc = false } }
 
 tasks.withType(JavaCompile) { it.options.encoding = "UTF-8" }
 
 jar { from("LICENSE") }
 
 task modrinth(type: com.modrinth.minotaur.TaskModrinthUpload) {
-  onlyIf { System.getenv("MODRINTH") }
   token = System.getenv("MODRINTH")
   projectId = "VPU6VYVP"
   versionNumber = mod_version
@@ -54,23 +53,12 @@ publishing {
       groupId = 'coffee.waffle'
       artifactId = archivesBaseName
       version = version
-      artifact(remapJar) { builtBy remapJar }
-      artifact(sourcesJar) { builtBy remapSourcesJar }
+      from components.java
     }
   }
   repositories {
     maven {
-      name = "emmavenReleases"
-      url = "https://maven.waffle.coffee/releases"
-      credentials {
-        username = System.getenv().MAVEN_USER
-        password = System.getenv().MAVEN_PASS
-      }
-      authentication { basic(BasicAuthentication) }
-    }
-    maven {
-      name = "emmavenSnapshots"
-      url = "https://maven.waffle.coffee/snapshots"
+      url = System.getenv().MAVEN_URL
       credentials {
         username = System.getenv().MAVEN_USER
         password = System.getenv().MAVEN_PASS

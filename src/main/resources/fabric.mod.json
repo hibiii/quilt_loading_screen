@@ -23,6 +23,9 @@
   "mixins": [
     "quilt-loading-screen.mixins.json"
   ],
+  "depends": {
+    "fabric-resource-loader-v0": "*"
+  },
   "suggests": {
     "modmenu": "*"
   }

@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2021 darkerbit
- * Copyright (c) 2021 wafflecoffee
- * Copyright (c) 2020 TeamMidnightDust (MidnightConfig only)
+ * Copyright (c) 2021, 2022 wafflecoffee
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,15 +21,10 @@
  * SOFTWARE.
  */
 
-package coffee.waffle.qls.config;
+package coffee.waffle.qls;
 
-import coffee.waffle.qls.QuiltLoadingScreen;
-import com.terraformersmc.modmenu.api.ConfigScreenFactory;
-import com.terraformersmc.modmenu.api.ModMenuApi;
+import eu.midnightdust.lib.config.MidnightConfig;
 
-public class ModMenuIntegration implements ModMenuApi {
-  @Override
-  public ConfigScreenFactory<?> getModConfigScreenFactory() {
-    return parent -> MidnightConfig.getScreen(parent, QuiltLoadingScreen.MODID);
-  }
+public class Config extends MidnightConfig {
+  @Entry public static boolean prideQuiltsEnabled = false;
 }

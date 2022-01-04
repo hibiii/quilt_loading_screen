@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2021 darkerbit
- * Copyright (c) 2021 wafflecoffee
- * Copyright (c) 2020 TeamMidnightDust (MidnightConfig only)
+ * Copyright (c) 2021, 2022 wafflecoffee
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal

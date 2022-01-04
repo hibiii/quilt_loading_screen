@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2021 darkerbit
- * Copyright (c) 2021 wafflecoffee
- * Copyright (c) 2020 TeamMidnightDust (MidnightConfig only)
+ * Copyright (c) 2021, 2022 wafflecoffee
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,9 +23,10 @@
 
 package coffee.waffle.qls;
 
-import coffee.waffle.qls.config.Config;
 import coffee.waffle.qls.mixin.DrawableHelperAccessor;
 import com.mojang.blaze3d.systems.RenderSystem;
+import eu.midnightdust.lib.config.MidnightConfig;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.BackgroundHelper;
 import net.minecraft.client.util.math.MatrixStack;
@@ -39,43 +39,37 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static net.fabricmc.fabric.api.resource.ResourceManagerHelper.registerBuiltinResourcePack;
+import static net.fabricmc.fabric.api.resource.ResourcePackActivationType.NORMAL;
+
 public class QuiltLoadingScreen {
   public static final String MODID = "quilt-loading-screen";
-
   public static final int BACKGROUND_COLOR = BackgroundHelper.ColorMixer.getArgb(0, 35, 22, 56);
-
-  private static final Identifier PATCH_TEXTURE =
-          new Identifier(MODID, "textures/gui/patch.png");
-
-  private static final Identifier PRIDE_TEXTURE =
-          new Identifier(MODID, "textures/gui/community_quilt.png");
-
-  private static final int PATCH_COUNT = 16;
-
-  private final int patchSize;
+  private static final Identifier PATCH_TEXTURE = id("textures/gui/patches.png");
+  private static final Identifier PRIDE_TEXTURE = id("textures/gui/pride_patches.png");
 
   private final MinecraftClient client;
+  private final boolean prideMonth;
+  private final int patchSize;
+  private static int patchCount;
 
   private final Random random = new Random();
-
   private final ArrayList<FallingPatch> fallingPatches = new ArrayList<>();
 
   private float patchTimer = 0f;
 
-  private boolean prideMonth;
-
   public QuiltLoadingScreen(MinecraftClient client) {
+    MidnightConfig.init(QuiltLoadingScreen.MODID, Config.class);
+
+    FabricLoader.getInstance().getModContainer(MODID).ifPresent(container ->
+            registerBuiltinResourcePack(id("quilt-ui"), container, NORMAL));
+
     this.client = client;
-
-    prideMonth = LocalDate.now().getMonth() == Month.JUNE;
-
-    Config.initConfig();
-
-    if (Config.isPrideQuiltsEnabled()) prideMonth = true;
-
+    prideMonth = Config.prideQuiltsEnabled || LocalDate.now().getMonth() == Month.JUNE;
     patchSize = prideMonth ? 20 : 24;
+    patchCount = prideMonth ? 32 : 16;
 
-    createPatch(prideMonth ? 12 : 8); // summons the holy pineapple
+    createPatch(prideMonth ? 19 : 12); // summons the holy pineapple
   }
 
   public void createPatch(int type) {
@@ -119,6 +113,10 @@ public class QuiltLoadingScreen {
     for (FallingPatch patch : fallingPatches) {
       patch.render(matrices, client.options.monochromeLogo);
     }
+  }
+
+  private static Identifier id(String id) {
+      return new Identifier(MODID, id);
   }
 
   private static class FallingPatch {
@@ -168,8 +166,8 @@ public class QuiltLoadingScreen {
       double x2 = patchSize / (double) 2;
       double y2 = patchSize / (double) 2;
 
-      float u0 = 1.0f / PATCH_COUNT * type;
-      float u1 = u0 + 1.0f / PATCH_COUNT;
+      float u0 = 1.0f / patchCount * type;
+      float u1 = u0 + 1.0f / patchCount;
 
       float offset = monochrome ? 0.5f : 0.0f;
 

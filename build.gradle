@@ -13,6 +13,7 @@ String quilt_mappings = "2"          // https://lambdaurora.dev/tools/import_qui
 String loader_version = "0.13.3"     // https://fabricmc.net/develop/
 String modmenu_version = "3.1.0"     // https://modrinth.com/mod/modmenu/versions
 String midnightlib_version = "0.4.0" // https://modrinth.com/mod/midnightlib/versions
+String qsl_minecraft_version = System.getenv().GITHUB_REF ?: minecraft_version
 
 archivesBaseName = "quilt-loading-screen"
 version = loom.modVersion + "+" + minecraft_version
@@ -37,24 +38,24 @@ dependencies {
     addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:${minecraft_version}+build.${quilt_mappings}:v2"))
   })
   modImplementation "net.fabricmc:fabric-loader:${loader_version}"
-  modImplementation include("org.quiltmc.fabric_api_qsl:fabric-api-base:1.0.0+${minecraft_version}-SNAPSHOT")
+  modImplementation include("org.quiltmc.fabric_api_qsl:fabric-api-base:1.0.0+${qsl_minecraft_version}-SNAPSHOT")
 
   // Resource Loader: include FAPI QSL resource loader, compile against QSL only, runtime both
   modImplementation "org.quiltmc.qsl.core:resource_loader:1.0.0+${minecraft_version}-SNAPSHOT"
-  modLocalRuntime include("org.quiltmc.fabric_api_qsl:fabric-resource-loader-v0:1.0.2+${minecraft_version}-SNAPSHOT")
+  modLocalRuntime include("org.quiltmc.fabric_api_qsl:fabric-resource-loader-v0:1.0.2+${qsl_minecraft_version}-SNAPSHOT")
 
   // MidnightLib, config library
-  modRuntimeOnly "org.quiltmc.fabric_api_qsl:fabric-lifecycle-events-v1:2.0.2+${minecraft_version}-SNAPSHOT"
-  modRuntimeOnly "org.quiltmc.fabric_api_qsl:fabric-renderer-registries-v1:3.2.11+${minecraft_version}-SNAPSHOT"
+  modRuntimeOnly "org.quiltmc.fabric_api_qsl:fabric-lifecycle-events-v1:2.0.2+${qsl_minecraft_version}-SNAPSHOT"
+  modRuntimeOnly "org.quiltmc.fabric_api_qsl:fabric-renderer-registries-v1:3.2.11+${qsl_minecraft_version}-SNAPSHOT"
   modImplementation include("maven.modrinth:midnightlib:${midnightlib_version}")
 
   // Mod Menu
-  modRuntimeOnly "org.quiltmc.fabric_api_qsl:fabric-screen-api-v1:1.0.11+${minecraft_version}-SNAPSHOT"
+  modRuntimeOnly "org.quiltmc.fabric_api_qsl:fabric-screen-api-v1:1.0.11+${qsl_minecraft_version}-SNAPSHOT"
   modImplementation("com.terraformersmc:modmenu:${modmenu_version}") { transitive = false }
 
   // Transitive runtime dependencies
-  modLocalRuntime "org.quiltmc.qsl.core:lifecycle_events:1.0.0+${minecraft_version}-SNAPSHOT"
-  modLocalRuntime "org.quiltmc.qsl.gui:tooltip:1.0.0+${minecraft_version}-SNAPSHOT"
+  modLocalRuntime "org.quiltmc.qsl.core:lifecycle_events:1.0.0+${qsl_minecraft_version}-SNAPSHOT"
+  modLocalRuntime "org.quiltmc.qsl.gui:tooltip:1.0.0+${qsl_minecraft_version}-SNAPSHOT"
 }
 
 idea { module { downloadJavadoc = false } }

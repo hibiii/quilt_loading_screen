@@ -11,9 +11,10 @@ jobs:
           distribution: adopt
           java-version: 17
       - run: |
-          cd ..
           git clone https://github.com/wafflecoffee/fabric
           cd fabric
           git checkout fabric-api-qsl/22w11a-fixed-screens
-          ./gradlew publishToMavenLocal -x test -x gametestRun
+          ./gradlew publishToMavenLocal
+        env:
+          SNAPSHOT_URL: dummy
       - run: ./gradlew build

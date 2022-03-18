@@ -10,4 +10,12 @@ jobs:
         with:
           distribution: adopt
           java-version: 17
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/loom-cache
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/gradle-wrapper.properties') }}
+          restore-keys: ${{ runner.os }}-gradle
       - run: ./gradlew build

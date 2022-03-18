@@ -39,8 +39,8 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static net.fabricmc.fabric.api.resource.ResourceManagerHelper.registerBuiltinResourcePack;
-import static net.fabricmc.fabric.api.resource.ResourcePackActivationType.NORMAL;
+import static org.quiltmc.qsl.resource.loader.api.ResourceLoader.registerBuiltinResourcePack;
+import static org.quiltmc.qsl.resource.loader.api.ResourcePackActivationType.NORMAL;
 
 public class QuiltLoadingScreen {
   public static final String MODID = "quilt-loading-screen";
@@ -111,7 +111,7 @@ public class QuiltLoadingScreen {
     RenderSystem.defaultBlendFunc();
 
     for (FallingPatch patch : fallingPatches) {
-      patch.render(matrices, client.options.monochromeLogo);
+      patch.render(matrices, client.options.method_41772().method_41753());
     }
   }
 

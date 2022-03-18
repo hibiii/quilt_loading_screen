@@ -1,38 +1,61 @@
 //file:noinspection GroovyAssignabilityCheck
 plugins {
-  id "fabric-loom" version "0.10.+"
-  id "com.modrinth.minotaur" version "1.2.+"
-  id "org.cadixdev.licenser" version "0.6.+"
+  id "fabric-loom" version "0.12.+"
+  id "org.quiltmc.quilt-mappings-on-loom" version "4.+"
+  id "org.quiltmc.gradle.licenser" version "1.+"
+  id "io.github.juuxel.loom-quiltflower" version "1.+"
+  id "com.modrinth.minotaur" version "2.+"
   id "maven-publish"
 }
 
 String mod_version = loom.modVersion
-String minecraft_version = "1.17.1"
-String yarn_mappings = "65"           // https://fabricmc.net/versions.html
-String loader_version = "0.12.12"     // https://fabricmc.net/versions.html
-String fabric_version = "0.45.1+1.17" // https://fabricmc.net/versions.html
-String modmenu_version = "2.0.14"     // https://modrinth.com/mod/modmenu/versions
-String midnightlib_version = "0.3.1"  // https://modrinth.com/mod/midnightlib/versions
+String minecraft_version = "22w11a"
+String quilt_mappings = "2"          // https://lambdaurora.dev/tools/import_quilt.html
+String loader_version = "0.13.3"     // https://fabricmc.net/develop/
+String modmenu_version = "3.1.0"     // https://modrinth.com/mod/modmenu/versions
+String midnightlib_version = "0.4.0" // https://modrinth.com/mod/midnightlib/versions
 
 archivesBaseName = "quilt-loading-screen"
-version = mod_version + "+" + minecraft_version + System.getenv().SNAPSHOT
+version = mod_version + "+" + minecraft_version
 
 repositories {
+  mavenLocal()
   maven { url "https://maven.terraformersmc.com" }
   maven { url "https://api.modrinth.com/maven" }
+  maven { url "https://maven.quiltmc.org/repository/release" }
+  maven {
+    url "https://maven.quiltmc.org/repository/snapshot"
+    content {
+      includeGroup "org.quiltmc.fabric_api_qsl"
+      includeGroupByRegex "org\\.quiltmc\\.qsl(?:\\.[a-z_]+)?"
+    }
+  }
 }
 
 dependencies {
   minecraft "com.mojang:minecraft:${minecraft_version}"
-  mappings "net.fabricmc:yarn:${minecraft_version}+build.${yarn_mappings}:v2"
+  mappings(loom.layered {
+    addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:${minecraft_version}+build.${quilt_mappings}:v2"))
+  })
   modImplementation "net.fabricmc:fabric-loader:${loader_version}"
-  modImplementation fabricApi.module("fabric-resource-loader-v0", fabric_version)
-  ["fabric-renderer-registries-v1", "fabric-lifecycle-events-v1"].forEach {
-    modRuntimeOnly fabricApi.module(it, fabric_version)
-  }
+  modImplementation include("org.quiltmc.fabric_api_qsl:fabric-api-base:1.0.0+${minecraft_version}-SNAPSHOT")
 
+  // Resource Loader: include FAPI QSL resource loader, compile against QSL only, runtime both
+  modImplementation "org.quiltmc.qsl.core:resource_loader:1.0.0+${minecraft_version}-SNAPSHOT"
+  modLocalRuntime include("org.quiltmc.fabric_api_qsl:fabric-resource-loader-v0:1.0.2+${minecraft_version}-SNAPSHOT")
+
+  // MidnightLib, config library
+  modRuntimeOnly "org.quiltmc.fabric_api_qsl:fabric-lifecycle-events-v1:2.0.2+${minecraft_version}-SNAPSHOT"
+  modRuntimeOnly "org.quiltmc.fabric_api_qsl:fabric-renderer-registries-v1:3.2.11+${minecraft_version}-SNAPSHOT"
   modImplementation include("maven.modrinth:midnightlib:${midnightlib_version}")
-  modImplementation "com.terraformersmc:modmenu:${modmenu_version}"
+
+  // Mod Menu
+  modRuntimeOnly "org.quiltmc.fabric_api_qsl:fabric-screen-api-v1:1.0.11+${minecraft_version}-SNAPSHOT"
+  modImplementation("com.terraformersmc:modmenu:${modmenu_version}") { transitive = false }
+
+  // Transitive runtime dependencies
+  modLocalRuntime "org.quiltmc.qsl.core:lifecycle_events:1.0.0+${minecraft_version}-SNAPSHOT"
+  modLocalRuntime "org.quiltmc.qsl.gui:tooltip:1.0.0+${minecraft_version}-SNAPSHOT"
 }
 
 idea { module { downloadJavadoc = false } }
@@ -41,14 +64,10 @@ tasks.withType(JavaCompile) { it.options.encoding = "UTF-8" }
 
 jar { from("LICENSE", "README.md") }
 
-task modrinth(type: com.modrinth.minotaur.TaskModrinthUpload) {
-  token = System.getenv("MODRINTH")
+modrinth {
   projectId = "VPU6VYVP"
-  versionNumber = mod_version
-  versionType = "RELEASE"
   uploadFile = remapJar
-  addGameVersion minecraft_version
-  addLoader "fabric"
+  loaders = ["fabric"]
 }
 
 java { withSourcesJar() }

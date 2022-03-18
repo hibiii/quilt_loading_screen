@@ -2,7 +2,7 @@ name: Release
 on: [ workflow_dispatch ]
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -13,6 +13,6 @@ jobs:
       - run: ./gradlew modrinth publish
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-          MAVEN_URL: "https://maven.waffle.coffee/releases"
+          MAVEN_URL: ${{ secrets.MAVEN_URL }}
           MAVEN_USER: ${{ secrets.MAVEN_USER }}
           MAVEN_PASS: ${{ secrets.MAVEN_PASS }}

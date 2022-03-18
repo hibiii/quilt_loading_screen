@@ -9,7 +9,7 @@ jobs:
       - uses: actions/setup-java@v2
         with:
           distribution: adopt
-          java-version: 16
+          java-version: 17
       - run: ./gradlew modrinth publish
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}

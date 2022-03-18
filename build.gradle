@@ -13,13 +13,14 @@ String quilt_mappings = "2"          // https://lambdaurora.dev/tools/import_qui
 String loader_version = "0.13.3"     // https://fabricmc.net/develop/
 String modmenu_version = "3.1.0"     // https://modrinth.com/mod/modmenu/versions
 String midnightlib_version = "0.4.0" // https://modrinth.com/mod/midnightlib/versions
-String qsl_minecraft_version = System.getenv().GITHUB_REF.substring(System.getenv().GITHUB_REF.lastIndexOf("/") + 1) ?: minecraft_version
+String qsl_minecraft_version = minecraft_version + "-fixed-screens"
 
 archivesBaseName = "quilt-loading-screen"
 version = loom.modVersion + "+" + minecraft_version
 
 repositories {
   mavenLocal()
+  maven { url "https://maven.frydae.dev/snapshots" }
   maven { url "https://maven.terraformersmc.com" }
   maven { url "https://api.modrinth.com/maven" }
   maven { url "https://maven.quiltmc.org/repository/release" }
@@ -54,8 +55,8 @@ dependencies {
   modImplementation("com.terraformersmc:modmenu:${modmenu_version}") { transitive = false }
 
   // Transitive runtime dependencies
-  modLocalRuntime "org.quiltmc.qsl.core:lifecycle_events:1.0.0+${qsl_minecraft_version}-SNAPSHOT"
-  modLocalRuntime "org.quiltmc.qsl.gui:tooltip:1.0.0+${qsl_minecraft_version}-SNAPSHOT"
+  modLocalRuntime "org.quiltmc.qsl.core:lifecycle_events:1.0.0+${minecraft_version}-SNAPSHOT"
+  modLocalRuntime "org.quiltmc.qsl.gui:tooltip:1.0.0+${minecraft_version}-SNAPSHOT"
 }
 
 idea { module { downloadJavadoc = false } }

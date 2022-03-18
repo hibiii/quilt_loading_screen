@@ -18,12 +18,4 @@ jobs:
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/gradle-wrapper.properties') }}
           restore-keys: ${{ runner.os }}-gradle
-      - env:
-          SNAPSHOT_URL: dummy
-        run: |
-          git clone https://github.com/wafflecoffee/fabric
-          cd fabric
-          git checkout fabric-api-qsl/22w11a-fixed-screens
-          ./gradlew publishToMavenLocal
-          ls -shal --recursive .m2/repository/org/quiltmc/fabric_api_qsl/
       - run: ./gradlew build

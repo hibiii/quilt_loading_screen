@@ -10,11 +10,19 @@ jobs:
         with:
           distribution: adopt
           java-version: 17
-      - run: |
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/loom-cache
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/gradle-wrapper.properties') }}
+          restore-keys: ${{ runner.os }}-gradle
+      - env:
+          SNAPSHOT_URL: dummy
+        run: |
           git clone https://github.com/wafflecoffee/fabric
           cd fabric
           git checkout fabric-api-qsl/22w11a-fixed-screens
           ./gradlew publishToMavenLocal
-        env:
-          SNAPSHOT_URL: dummy
       - run: ./gradlew build

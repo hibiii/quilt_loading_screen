@@ -13,7 +13,7 @@ String quilt_mappings = "2"          // https://lambdaurora.dev/tools/import_qui
 String loader_version = "0.13.3"     // https://fabricmc.net/develop/
 String modmenu_version = "3.1.0"     // https://modrinth.com/mod/modmenu/versions
 String midnightlib_version = "0.4.0" // https://modrinth.com/mod/midnightlib/versions
-String qsl_minecraft_version = System.getenv().GITHUB_REF ?: minecraft_version
+String qsl_minecraft_version = System.getenv().GITHUB_REF.substring(System.getenv().GITHUB_REF.lastIndexOf("/") + 1) ?: minecraft_version
 
 archivesBaseName = "quilt-loading-screen"
 version = loom.modVersion + "+" + minecraft_version

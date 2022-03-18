@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "quilt-loading-screen",
-  "version": "2.2.1",
+  "version": "3.0.0",
   "name": "Quilt Loading Screen",
   "description": "Makes Minecraft loading screen look like the banner of the QuiltMC Community Server.",
   "authors": [
@@ -18,11 +18,16 @@
   "license": "MIT",
   "icon": "assets/quilt-loading-screen/icon.png",
   "environment": "client",
+  "entrypoints": {
+    "client_init": [
+      "coffee.waffle.qls.QLSClientInit"
+    ]
+  },
   "mixins": [
     "quilt-loading-screen.mixins.json"
   ],
   "depends": {
-    "fabric-resource-loader-v0": "*",
+    "quilted-fabric-resource-loader-v0": "*",
     "midnightlib": "*"
   },
   "suggests": {

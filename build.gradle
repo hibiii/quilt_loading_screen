@@ -8,7 +8,6 @@ plugins {
   id "maven-publish"
 }
 
-String mod_version = loom.modVersion
 String minecraft_version = "22w11a"
 String quilt_mappings = "2"          // https://lambdaurora.dev/tools/import_quilt.html
 String loader_version = "0.13.3"     // https://fabricmc.net/develop/
@@ -16,7 +15,7 @@ String modmenu_version = "3.1.0"     // https://modrinth.com/mod/modmenu/version
 String midnightlib_version = "0.4.0" // https://modrinth.com/mod/midnightlib/versions
 
 archivesBaseName = "quilt-loading-screen"
-version = mod_version + "+" + minecraft_version
+version = loom.modVersion + "+" + minecraft_version
 
 repositories {
   mavenLocal()
@@ -60,9 +59,18 @@ dependencies {
 
 idea { module { downloadJavadoc = false } }
 
-tasks.withType(JavaCompile) { it.options.encoding = "UTF-8" }
+tasks.withType(JavaCompile).forEach {
+  it.options.encoding = "UTF-8"
+  //noinspection all
+  it.options.release = 17
+}
 
 jar { from("LICENSE", "README.md") }
+
+license {
+  rule "HEADER"
+  include "**/*.java"
+}
 
 modrinth {
   projectId = "VPU6VYVP"

@@ -8,7 +8,7 @@
 package coffee.waffle.qls;
 
 import eu.midnightdust.lib.config.MidnightConfig;
-import net.fabricmc.loader.api.ModContainer;
+import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 import org.quiltmc.qsl.resource.loader.api.ResourceLoader;
 import org.quiltmc.qsl.resource.loader.api.ResourcePackActivationType;

@@ -54,7 +54,7 @@ public abstract class SplashOverlayMixin extends Overlay {
           index = 5
   )
   private int changeColor(int in) {
-    if (this.client.options.method_41772().method_41753())
+    if (this.client.options.monochromeLogo)
       return in;
 
     return withAlpha(QuiltLoadingScreen.BACKGROUND_COLOR, in >> 24); // Use existing transparency
@@ -67,7 +67,7 @@ public abstract class SplashOverlayMixin extends Overlay {
           ordinal = 4 // int m (or int o according to mixin apparently)
   )
   private int changeColorGl(int in) {
-    return this.client.options.method_41772().method_41753() ? in : QuiltLoadingScreen.BACKGROUND_COLOR;
+    return this.client.options.monochromeLogo ? in : QuiltLoadingScreen.BACKGROUND_COLOR;
   }
 
   // Render before third getWindow to render before the logo

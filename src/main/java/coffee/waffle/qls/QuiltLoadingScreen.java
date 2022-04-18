@@ -10,7 +10,6 @@ package coffee.waffle.qls;
 import coffee.waffle.qls.mixin.DrawableHelperAccessor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.BackgroundHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
@@ -86,7 +85,7 @@ public class QuiltLoadingScreen {
     RenderSystem.defaultBlendFunc();
 
     for (FallingPatch patch : fallingPatches) {
-      patch.render(matrices, client.options.method_41772().method_41753());
+      patch.render(matrices, client.options.monochromeLogo);
     }
   }
 

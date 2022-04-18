@@ -8,8 +8,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v2
         with:
-          distribution: adopt
-          java-version: 16
+          distribution: temurin
+          java-version: 17
       - run: ./gradlew modrinth publish
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}

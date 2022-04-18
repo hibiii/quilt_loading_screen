@@ -20,7 +20,7 @@
       {
         "id": "modmenu",
         "reason": "For actually configuring stuff",
-        "required": false
+        "optional": true
       }
     ],
     "intermediate_mappings": "net.fabricmc:intermediary",

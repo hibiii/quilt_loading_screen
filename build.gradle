@@ -52,7 +52,7 @@ modrinth {
   uploadFile = remapJar
   dependencies = [
     new ModDependency("qvIfYCYJ", "required"),
-    new ModDependency("P7dR8mSH", "unsupported"),
+    new ModDependency("P7dR8mSH", "incompatible"),
   ]
   changelog = """
 **The first release that does not use Fabric! You must download [Quilt Standard Libraries](https://modrinth.com/mod/qsl) and [Quilt Loader](https://quiltmc.org).**

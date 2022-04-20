@@ -6,13 +6,6 @@ plugins {
   id "maven-publish"
 }
 
-String minecraft_version = "1.18.2"
-String quilt_mappings = "22"            // https://lambdaurora.dev/tools/import_quilt.html
-String loader_version = "0.16.0-beta.6" // https://lambdaurora.dev/tools/import_quilt.html
-String qsl_version = "1.1.0-beta.2"     // https://lambdaurora.dev/tools/import_quilt.html
-String modmenu_version = "3.1.1"        // https://modrinth.com/mod/modmenu/versions
-String midnightlib_version = "0.4.0"    // https://modrinth.com/mod/midnightlib/versions
-
 archivesBaseName = "quilt_loading_screen"
 version = "$loom.modVersion+$minecraft_version"
 
@@ -59,9 +52,10 @@ modrinth {
   uploadFile = remapJar
   dependencies = [
     new ModDependency("qvIfYCYJ", "required"),
+    new ModDependency("P7dR8mSH", "unsupported"),
   ]
   changelog = """
-**The first release that does not use Fabric! You must download [Quilt Standard Libraries](https://modrinth.com/mod/qsl).**
+**The first release that does not use Fabric! You must download [Quilt Standard Libraries](https://modrinth.com/mod/qsl) and [Quilt Loader](https://quiltmc.org).**
 - 3.x series is now for 1.18.x instead of 1.19 like before. For 1.19, use 4.x.
 - Add Oliver-does-code's Quilt UI as a disabled-by-default resource pack
 - Update textures to be based off of emotes rather than server banner

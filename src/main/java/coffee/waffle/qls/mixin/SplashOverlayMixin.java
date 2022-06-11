@@ -54,7 +54,7 @@ public abstract class SplashOverlayMixin extends Overlay {
           index = 5
   )
   private int changeColor(int in) {
-    if (this.client.options.method_41772().method_41753())
+    if (this.client.options.getMonochromeLogo().get())
       return in;
 
     return withAlpha(QuiltLoadingScreen.BACKGROUND_COLOR, in >> 24); // Use existing transparency
@@ -67,13 +67,13 @@ public abstract class SplashOverlayMixin extends Overlay {
           ordinal = 4 // int m (or int o according to mixin apparently)
   )
   private int changeColorGl(int in) {
-    return this.client.options.method_41772().method_41753() ? in : QuiltLoadingScreen.BACKGROUND_COLOR;
+    return this.client.options.getMonochromeLogo().get() ? in : QuiltLoadingScreen.BACKGROUND_COLOR;
   }
 
-  // Render before third getWindow to render before the logo
+  // Render before shader texture set to render before the logo
   @Inject(
           method = "render(Lnet/minecraft/client/util/math/MatrixStack;IIF)V",
-          at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;getWindow()Lnet/minecraft/client/util/Window;", ordinal = 2),
+          at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderTexture(ILnet/minecraft/util/Identifier;)V", ordinal = 0),
           locals = LocalCapture.CAPTURE_FAILSOFT
   )
   private void renderPatches(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci,

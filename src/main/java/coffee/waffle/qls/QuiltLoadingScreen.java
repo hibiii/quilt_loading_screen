@@ -10,8 +10,7 @@ package coffee.waffle.qls;
 import coffee.waffle.qls.mixin.DrawableHelperAccessor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.hud.BackgroundHelper;
+import net.minecraft.client.util.ColorUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Matrix4f;
@@ -24,7 +23,7 @@ import java.util.Random;
 
 public class QuiltLoadingScreen {
   public static final String MODID = "quilt-loading-screen";
-  public static final int BACKGROUND_COLOR = BackgroundHelper.ColorMixer.getArgb(0, 35, 22, 56);
+  public static final int BACKGROUND_COLOR = ColorUtil.ARGB32.getArgb(0, 35, 22, 56);
 
   private final MinecraftClient client;
   private final int patchesInTextures, patchSize, patchCount;
@@ -86,7 +85,7 @@ public class QuiltLoadingScreen {
     RenderSystem.defaultBlendFunc();
 
     for (FallingPatch patch : fallingPatches) {
-      patch.render(matrices, client.options.method_41772().method_41753());
+      patch.render(matrices, client.options.getMonochromeLogo().get());
     }
   }
 
@@ -132,7 +131,7 @@ public class QuiltLoadingScreen {
       matrices.push();
       matrices.translate(x, y, 0);
 
-      Matrix4f matrix = matrices.peek().getModel();
+      Matrix4f matrix = matrices.peek().getPosition();
       matrix.multiply(new Quaternion(0.0f, 0.0f, (float) rot, true));
       matrix.multiply(Matrix4f.scale((float) scale, (float) scale, (float) scale));
 

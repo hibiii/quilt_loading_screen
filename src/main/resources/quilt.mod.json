@@ -6,7 +6,8 @@
     "provides": [ "quilt-loading-screen" ],
     "version": "4.0.0",
     "entrypoints": {
-      "client_init": "coffee.waffle.qls.QLSClientInit"
+      "client_init": "coffee.waffle.qls.QLSClientInit",
+      "modmenu": "coffee.waffle.qls.ModMenuInit"
     },
     "depends": [
       "minecraft",

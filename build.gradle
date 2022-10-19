@@ -22,7 +22,7 @@ dependencies {
   modImplementation libs.midnightlib
   include libs.midnightlib
 
-  modLocalRuntime libs.mod.menu
+  modImplementation libs.mod.menu
 }
 
 tasks.withType(JavaCompile).configureEach {

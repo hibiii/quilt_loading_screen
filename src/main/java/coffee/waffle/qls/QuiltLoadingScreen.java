@@ -131,7 +131,7 @@ public class QuiltLoadingScreen {
       matrices.push();
       matrices.translate(x, y, 0);
 
-      Matrix4f matrix = matrices.peek().getPosition();
+      Matrix4f matrix = matrices.peek().getModel();
       matrix.multiply(new Quaternion(0.0f, 0.0f, (float) rot, true));
       matrix.multiply(Matrix4f.scale((float) scale, (float) scale, (float) scale));
 

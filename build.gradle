@@ -7,7 +7,7 @@ plugins {
 }
 
 archivesBaseName = 'quilt_loading_screen'
-version = "$loom.modVersion+$minecraft_version"
+version = "$loom.modVersion+${libs.versions.minecraft.get()}"
 
 repositories {
   maven { url 'https://maven.terraformersmc.com' }

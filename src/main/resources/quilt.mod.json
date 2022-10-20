@@ -1,53 +1,60 @@
 {
-  "schema_version": 1,
-  "quilt_loader": {
-    "group": "coffee.waffle",
-    "id": "quilt_loading_screen",
-    "provides": [ "quilt-loading-screen" ],
-    "version": "4.0.0",
-    "entrypoints": {
-      "client_init": "coffee.waffle.qls.QLSClientInit",
-      "modmenu": "coffee.waffle.qls.ModMenuInit"
-    },
-    "depends": [
-      "minecraft",
-      "quilt_loader",
-      "quilt_resource_loader",
-      {
-        "id": "midnightlib",
-        "version": ">=0.5.0",
-        "reason": "Config library"
-      },
-      {
-        "id": "modmenu",
-        "reason": "For actually configuring stuff",
-        "optional": true
-      }
-    ],
-    "intermediate_mappings": "net.fabricmc:intermediary",
-    "metadata": {
-      "name": "Quilt Loading Screen",
-      "description": "Makes the Minecraft loading screen have QuiltMC patches",
-      "contributors": {
-        "Emmaffle": "Owner",
-        "darkerbit": "Original Author",
-        "Oliver-makes-code": "Quilt UI Author"
-      },
-      "contact": {
-        "email": "qls@waffle.coffee",
-        "homepage": "https://modrinth.com/mod/quilt-loading-screen",
-        "issues": "https://github.com/emmods/quilt-loading-screen/issues",
-        "sources": "https://github.com/wafflecoffee/quilt-loading-screen",
-        "discord": "https://waffle.coffee/discord"
-      },
-      "license": "MIT",
-      "icon": "assets/quilt-loading-screen/icon.png"
-    }
-  },
-  "mixin": [
-    "quilt-loading-screen.mixins.json"
-  ],
-  "minecraft": {
-    "environment": "client"
-  }
+	"schema_version": 1,
+	"quilt_loader": {
+		"group": "com.emmacypress",
+		"id": "quilt_loading_screen",
+		"provides": [
+			"quilt-loading-screen"
+		],
+		"version": "4.0.0",
+		"metadata": {
+			"name": "Quilt Loading Screen",
+			"description": "Makes the Minecraft loading screen have QuiltMC patches",
+			"contributors": {
+				"Emmaffle": "Owner",
+				"darkerbit": "Original Author",
+				"Oliver-makes-code": "Quilt UI Author"
+			},
+			"contact": {
+				"email": "emmaffle@modrinth.com",
+				"homepage": "https://modrinth.com/mod/quilt-loading-screen",
+				"issues": "https://codeberg.org/emmods/quilt_loading_screen/issues",
+				"sources": "https://codeberg.org/emmods/quilt_loading_screen",
+				"discord": "https://discord.gg/EES4w9qbtk",
+				"donate": "https://buymeacoff.ee/emmaffle"
+			},
+			"license": "MIT",
+			"icon": "assets/quilt_loading_screen/icon.png"
+		},
+		"intermediate_mappings": "net.fabricmc:intermediary",
+		"entrypoints": {
+			"client_init": "com.emmacypress.quilt_loading_screen.QLSClientInit"
+		},
+		"depends": [
+			"minecraft",
+			"quilt_loader",
+			"quilt_resource_loader",
+			{
+				"id": "midnightlib",
+				"version": ">=0.6.2",
+				"reason": "Config library"
+			},
+			{
+				"id": "modmenu",
+				"reason": "For actually configuring stuff",
+				"optional": true
+			}
+		]
+	},
+	"mixin": "quilt_loading_screen.mixins.json",
+	"minecraft": {
+		"environment": "client"
+	},
+	"modmenu": {
+		"links": {
+			"modmenu.buymeacoffee": "https://buymeacoff.ee/emmaffle",
+			"modmenu.discord": "https://discord.gg/EES4w9qbtk",
+			"modmenu.modrinth": "https://modrinth.com/mod/quilt-loading-screen"
+		}
+	}
 }

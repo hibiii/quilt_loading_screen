@@ -1,49 +1,49 @@
 //file:noinspection GroovyAssignabilityCheck
 plugins {
-  alias libs.plugins.quilt.loom
-  alias libs.plugins.quilt.licenser
-  alias libs.plugins.minotaur
-  alias libs.plugins.machete
+	alias libs.plugins.quilt.loom
+	alias libs.plugins.quilt.licenser
+	alias libs.plugins.minotaur
+	alias libs.plugins.machete
 }
 
 archivesBaseName = 'quilt_loading_screen'
 version = "$loom.modVersion+${libs.versions.minecraft.get()}"
 
 repositories {
-  maven { url 'https://maven.terraformersmc.com' }
-  maven { url 'https://api.modrinth.com/maven' }
+	maven { url 'https://maven.terraformersmc.com' }
+	maven { url 'https://api.modrinth.com/maven' }
 }
 
 dependencies {
-  minecraft libs.minecraft
-  mappings(variantOf(libs.quilt.mappings) { classifier 'intermediary-v2' })
-  modApi libs.bundles.quilt
+	minecraft libs.minecraft
+	mappings(variantOf(libs.quilt.mappings) { classifier 'intermediary-v2' })
+	modApi libs.bundles.quilt
 
-  modImplementation libs.midnightlib
-  include libs.midnightlib
+	modImplementation libs.midnightlib
+	include libs.midnightlib
 
-  modImplementation libs.mod.menu
+	modLocalRuntime libs.mod.menu
 }
 
 tasks.withType(JavaCompile).configureEach {
-  it.options.encoding = 'UTF-8'
-  it.options.release = 17
-  it.sourceCompatibility = 17
+	it.options.encoding = 'UTF-8'
+	it.options.release = 17
+	it.sourceCompatibility = 17
 }
 
 jar.from 'LICENSE', 'README.md'
 java.withSourcesJar()
 
 license {
-  rule 'HEADER'
-  include '**/*.java'
+	rule 'HEADER'
+	include '**/*.java'
 }
 
 modrinth {
-  projectId = 'quilt-loading-screen'
-  versionName = System.getenv().VERSION_NAME ?: versionNumber
-  changelog = System.getenv().CHANGELOG ?: DEFAULT_CHANGELOG
-  versionType = System.getenv().VERSION_TYPE ?: DEFAULT_VERSION_TYPE
-  uploadFile = remapJar
-  additionalFiles = [sourcesJar]
+	projectId = 'quilt-loading-screen'
+	versionName = System.getenv().VERSION_NAME ?: versionNumber
+	changelog = System.getenv().CHANGELOG ?: DEFAULT_CHANGELOG
+	versionType = System.getenv().VERSION_TYPE ?: DEFAULT_VERSION_TYPE
+	uploadFile = remapJar
+	additionalFiles = [sourcesJar]
 }

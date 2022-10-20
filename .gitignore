@@ -1,27 +1,45 @@
-# Gradle
-.gradle/
+### Build tool ###
+run/
 build/
-out/
-classes/
 
-# Eclipse
-*.launch
+### Gradle ###
+.gradle
+!**/src/main/**/build/
+!**/src/test/**/build/
 
-# IDEA
+### Brachyura ###
+.brachyura/
+
+### IntelliJ IDEA ###
 .idea/
+*.iws
 *.iml
 *.ipr
-*.iws
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
 
-# VSCode
-.settings/
-.vscode/
-bin/
+### Eclipse ###
+.apt_generated
 .classpath
+.factorypath
 .project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
 
-# macOS
-*.DS_Store
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
 
-# Loader
-run/
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store

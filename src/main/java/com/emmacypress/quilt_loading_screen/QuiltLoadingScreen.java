@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2021 darkerbit
- * Copyright (c) 2021, 2022 wafflecoffee
+ * Copyright (c) 2021, 2022 triphora
  *
  * Quilt Loading Screen is under the MIT License. See LICENSE for details.
  */
@@ -10,11 +10,8 @@ package com.emmacypress.quilt_loading_screen;
 import com.emmacypress.quilt_loading_screen.mixin.DrawableHelperAccessor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.ColorUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Matrix4f;
-import net.minecraft.util.math.Quaternion;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -23,7 +20,6 @@ import java.util.Random;
 
 public class QuiltLoadingScreen {
 	public static final String MODID = "quilt_loading_screen";
-	public static final int BACKGROUND_COLOR = ColorUtil.ARGB32.getArgb(0, 35, 22, 56);
 
 	private final MinecraftClient client;
 	private final int patchesInTextures, patchSize, patchCount;
@@ -51,7 +47,7 @@ public class QuiltLoadingScreen {
 			random.nextDouble() * this.client.getWindow().getScaledWidth(), -patchSize, 0,
 			(random.nextDouble() - 0.5) * 0.6,
 			random.nextDouble() * 3.0 + 1.0,
-			(random.nextDouble() - 0.5) * 6.0,
+			(random.nextDouble() - 0.5) / 6.0,
 			random.nextDouble() / 2 + 0.5,
 			type, patchSize
 		));
@@ -131,14 +127,13 @@ public class QuiltLoadingScreen {
 			matrices.push();
 			matrices.translate(x, y, 0);
 
-			Matrix4f matrix = matrices.peek().getModel();
-			matrix.multiply(new Quaternion(0.0f, 0.0f, (float) rot, true));
-			matrix.multiply(Matrix4f.scale((float) scale, (float) scale, (float) scale));
+			matrices.peek().getModel().rotateZ((float) rot);
+			matrices.scale((float) scale, (float) scale, (float) scale);
 
-			double x1 = -patchSize / (double) 2;
-			double y1 = -patchSize / (double) 2;
-			double x2 = patchSize / (double) 2;
-			double y2 = patchSize / (double) 2;
+			double x1 = -patchSize / 2d;
+			double y1 = -patchSize / 2d;
+			double x2 = patchSize / 2d;
+			double y2 = patchSize / 2d;
 
 			float u0 = 1.0f / patchCount * type;
 			float u1 = u0 + 1.0f / patchCount;
@@ -146,7 +141,7 @@ public class QuiltLoadingScreen {
 			float offset = monochrome ? 0.5f : 0.0f;
 
 			DrawableHelperAccessor.quiltLoadingScreen$drawTexturedQuad(
-				matrix,
+				matrices.peek().getModel(),
 				(int) x1, (int) x2, (int) y1, (int) y2, 0,
 				u0, u1, 0.0f + offset, 0.5f + offset
 			);

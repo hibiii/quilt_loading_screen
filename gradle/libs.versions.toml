@@ -1,16 +1,16 @@
 [versions]
-minecraft = '1.19.2'
+minecraft = '1.19.3-rc1'
 
 [libraries]
 # https://lambdaurora.dev/tools/import_quilt.html
 minecraft = { module = 'com.mojang:minecraft', version.ref = 'minecraft' }
-quilt_mappings = 'org.quiltmc:quilt-mappings:1.19.2+build.21'
-quilt_loader = 'org.quiltmc:quilt-loader:0.17.4'
-quilted_fabric_api = 'org.quiltmc.quilted-fabric-api:quilted-fabric-api:4.0.0-beta.16+0.64.0-1.19.2'
+quilt_mappings = 'org.quiltmc:quilt-mappings:1.19.3-rc1+build.3'
+quilt_loader = 'org.quiltmc:quilt-loader:0.17.6'
+quilted_fabric_api = 'org.quiltmc.quilted-fabric-api:quilted-fabric-api:5.0.0-alpha.2+0.68.1-1.19.3'
 
-midnightlib = 'maven.modrinth:midnightlib:0.6.1'
+midnightlib = 'maven.modrinth:midnightlib:1.1.0-fabric'
 
-mod_menu = 'com.terraformersmc:modmenu:4.0.6'
+mod_menu = 'com.terraformersmc:modmenu:5.0.0-alpha.4'
 
 [bundles]
 quilt = ['quilt_loader', 'quilted_fabric_api']

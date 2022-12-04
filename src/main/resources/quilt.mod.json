@@ -6,12 +6,12 @@
 		"provides": [
 			"quilt-loading-screen"
 		],
-		"version": "4.0.0",
+		"version": "5.0.0",
 		"metadata": {
 			"name": "Quilt Loading Screen",
 			"description": "Makes the Minecraft loading screen have QuiltMC patches",
 			"contributors": {
-				"Emmaffle": "Owner",
+				"triphora": "Owner",
 				"darkerbit": "Original Author",
 				"Oliver-makes-code": "Quilt UI Author"
 			},
@@ -21,7 +21,7 @@
 				"issues": "https://codeberg.org/emmods/quilt_loading_screen/issues",
 				"sources": "https://codeberg.org/emmods/quilt_loading_screen",
 				"discord": "https://discord.gg/EES4w9qbtk",
-				"donate": "https://buymeacoff.ee/emmaffle"
+				"donate": "https://github.com/sponsors/triphora"
 			},
 			"license": "MIT",
 			"icon": "assets/quilt_loading_screen/icon.png"
@@ -36,7 +36,7 @@
 			"quilt_resource_loader",
 			{
 				"id": "midnightlib",
-				"version": ">=0.6.2",
+				"version": ">=1.1.0",
 				"reason": "Config library"
 			},
 			{
@@ -52,7 +52,7 @@
 	},
 	"modmenu": {
 		"links": {
-			"modmenu.buymeacoffee": "https://buymeacoff.ee/emmaffle",
+			"quilt_loading_screen.support": "https://github.com/sponsors/triphora",
 			"modmenu.discord": "https://discord.gg/EES4w9qbtk",
 			"modmenu.modrinth": "https://modrinth.com/mod/quilt-loading-screen"
 		}

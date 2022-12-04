@@ -1,4 +1,7 @@
 {
+	"quilt_loading_screen.support": "Support the author",
 	"quilt_loading_screen.midnightconfig.title": "Quilt Loading Screen Config",
-	"quilt_loading_screen.midnightconfig.prideQuiltsEnabled": "Enable Pride Quilts even when it's not June!"
+	"quilt_loading_screen.midnightconfig.prideQuiltsEnabled": "Enable Pride Quilts even when it's not June!",
+	"quilt_loading_screen.midnightconfig.modifyBackgroundColor": "Change the background color from red to purple.",
+	"quilt_loading_screen.midnightconfig.modifyBackgroundColor.tooltip": "Does not apply if monochrome logo is set.\nRequires restart to take effect."
 }

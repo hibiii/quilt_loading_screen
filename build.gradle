@@ -10,8 +10,28 @@ archivesBaseName = 'quilt_loading_screen'
 version = "$loom.modVersion+${libs.versions.minecraft.get()}"
 
 repositories {
-	maven { url 'https://maven.terraformersmc.com' }
-	maven { url 'https://api.modrinth.com/maven' }
+	exclusiveContent {
+		forRepository {
+			maven {
+				name 'TerraformersMC'
+				url 'https://maven.terraformersmc.com'
+			}
+		}
+		filter {
+			includeGroup 'com.terraformersmc'
+		}
+	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				name "Modrinth"
+				url 'https://api.modrinth.com/maven'
+			}
+		}
+		filter {
+			includeGroup 'maven.modrinth'
+		}
+	}
 }
 
 dependencies {

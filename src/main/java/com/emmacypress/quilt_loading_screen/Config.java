@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2021 darkerbit
- * Copyright (c) 2021, 2022 wafflecoffee
+ * Copyright (c) 2021, 2022 triphora
  *
  * Quilt Loading Screen is under the MIT License. See LICENSE for details.
  */
@@ -11,4 +11,5 @@ import eu.midnightdust.lib.config.MidnightConfig;
 
 public class Config extends MidnightConfig {
 	@Entry public static boolean prideQuiltsEnabled = false;
+	@Entry public static boolean modifyBackgroundColor = true;
 }

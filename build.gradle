@@ -13,17 +13,6 @@ repositories {
 	exclusiveContent {
 		forRepository {
 			maven {
-				name 'TerraformersMC'
-				url 'https://maven.terraformersmc.com'
-			}
-		}
-		filter {
-			includeGroup 'com.terraformersmc'
-		}
-	}
-	exclusiveContent {
-		forRepository {
-			maven {
 				name "Modrinth"
 				url 'https://api.modrinth.com/maven'
 			}

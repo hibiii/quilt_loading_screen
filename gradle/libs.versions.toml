@@ -1,22 +1,22 @@
 [versions]
-minecraft = '1.19.3-rc1'
+minecraft = '1.19.4'
 
 [libraries]
 # https://lambdaurora.dev/tools/import_quilt.html
 minecraft = { module = 'com.mojang:minecraft', version.ref = 'minecraft' }
-quilt_mappings = 'org.quiltmc:quilt-mappings:1.19.3-rc1+build.3'
-quilt_loader = 'org.quiltmc:quilt-loader:0.17.6'
-quilted_fabric_api = 'org.quiltmc.quilted-fabric-api:quilted-fabric-api:5.0.0-alpha.2+0.68.1-1.19.3'
+quilt_mappings = 'org.quiltmc:quilt-mappings:1.19.4+build.5'
+quilt_loader = 'org.quiltmc:quilt-loader:0.18.5'
+quilted_fabric_api = 'org.quiltmc.quilted-fabric-api:quilted-fabric-api:6.0.0-beta.2+0.76.0-1.19.4'
 
-midnightlib = 'maven.modrinth:midnightlib:1.1.0-fabric'
+midnightlib = 'maven.modrinth:midnightlib:1.2.1-fabric'
 
-mod_menu = 'com.terraformersmc:modmenu:5.0.0-alpha.4'
+mod_menu = 'maven.modrinth:modmenu:6.1.0-rc.4'
 
 [bundles]
 quilt = ['quilt_loader', 'quilted_fabric_api']
 
 [plugins]
-quilt_loom = 'org.quiltmc.loom:1.0.+'
+quilt_loom = 'org.quiltmc.loom:1.1.+'
 quilt_licenser = 'org.quiltmc.gradle.licenser:1.+'
 minotaur = 'com.modrinth.minotaur:2.+'
-machete = 'io.github.p03w.machete:1.+'
+machete = 'io.github.p03w.machete:2.+'

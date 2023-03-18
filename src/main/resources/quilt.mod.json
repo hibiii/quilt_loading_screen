@@ -6,7 +6,7 @@
 		"provides": [
 			"quilt-loading-screen"
 		],
-		"version": "5.0.0",
+		"version": "${version}",
 		"metadata": {
 			"name": "Quilt Loading Screen",
 			"description": "Makes the Minecraft loading screen have QuiltMC patches",

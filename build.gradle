@@ -7,7 +7,7 @@ plugins {
 }
 
 archivesBaseName = 'quilt_loading_screen'
-version = "$loom.modVersion+${libs.versions.minecraft.get()}"
+version = "5.0.0+${libs.versions.minecraft.get()}"
 
 repositories {
 	exclusiveContent {
@@ -32,6 +32,15 @@ dependencies {
 	include libs.midnightlib
 
 	modLocalRuntime libs.mod.menu
+}
+
+// TEMPORARY: until https://github.com/QuiltMC/quilt-loom/issues/28 gets fixed
+processResources {
+	inputs.property 'version', version
+
+	filesMatching('quilt.mod.json') {
+		expand "version": version
+	}
 }
 
 tasks.withType(JavaCompile).configureEach {

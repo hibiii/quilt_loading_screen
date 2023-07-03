@@ -9,6 +9,7 @@ package com.emmacypress.quilt_loading_screen.mixin;
 
 import com.emmacypress.quilt_loading_screen.QuiltLoadingScreen;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screen.Overlay;
 import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.client.util.math.MatrixStack;
@@ -38,14 +39,14 @@ public abstract class SplashOverlayMixin extends Overlay {
 		quiltLoadingScreen$loadingScreen = new QuiltLoadingScreen(this.client);
 	}
 
-	// Render before shader texture set to render before the logo
+	// Render before logo
 	@Inject(
-		method = "render(Lnet/minecraft/client/util/math/MatrixStack;IIF)V",
-		at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderTexture(ILnet/minecraft/util/Identifier;)V", ordinal = 0),
+		method = "render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V",
+		at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;blendFunc(II)V", ordinal = 0),
 		locals = LocalCapture.CAPTURE_FAILSOFT
 	)
-	private void renderPatches(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci,
-	                           int i, int j, long l, float f) {
-		quiltLoadingScreen$loadingScreen.renderPatches(matrices, delta, f >= 1.0f);
+	private void renderPatches(GuiGraphics graphics, int mouseX, int mouseY, float delta, CallbackInfo ci,
+														 int i, int j, long l, float f) {
+		quiltLoadingScreen$loadingScreen.renderPatches(graphics, delta, f >= 1.0f);
 	}
 }

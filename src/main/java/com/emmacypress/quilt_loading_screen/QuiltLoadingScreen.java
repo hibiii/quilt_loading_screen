@@ -7,9 +7,10 @@
 
 package com.emmacypress.quilt_loading_screen;
 
-import com.emmacypress.quilt_loading_screen.mixin.DrawableHelperAccessor;
+import com.emmacypress.quilt_loading_screen.mixin.GuiGraphicsAccessor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
@@ -70,18 +71,17 @@ public class QuiltLoadingScreen {
 		}
 	}
 
-	public void renderPatches(MatrixStack matrices, float delta, boolean ending) {
+	public void renderPatches(GuiGraphics graphics, float delta, boolean ending) {
 		// spike prevention
 		if (delta < 2.0f)
 			updatePatches(delta, ending);
 
-		RenderSystem.setShaderTexture(0, texture);
-		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 
+		MatrixStack matrices = graphics.getMatrices();
+
 		for (FallingPatch patch : fallingPatches) {
-			patch.render(matrices, client.options.getMonochromeLogo().get());
+			patch.render(graphics, matrices, client.options.getMonochromeLogo().get());
 		}
 	}
 
@@ -123,7 +123,7 @@ public class QuiltLoadingScreen {
 			rot += rotSpeed * delta;
 		}
 
-		public void render(MatrixStack matrices, boolean monochrome) {
+		public void render(GuiGraphics graphics, MatrixStack matrices, boolean monochrome) {
 			matrices.push();
 			matrices.translate(x, y, 0);
 
@@ -140,8 +140,8 @@ public class QuiltLoadingScreen {
 
 			float offset = monochrome ? 0.5f : 0.0f;
 
-			DrawableHelperAccessor.quiltLoadingScreen$drawTexturedQuad(
-				matrices.peek().getModel(),
+			((GuiGraphicsAccessor) graphics).quiltLoadingScreen$drawTexturedQuad(
+				texture,
 				(int) x1, (int) x2, (int) y1, (int) y2, 0,
 				u0, u1, 0.0f + offset, 0.5f + offset
 			);

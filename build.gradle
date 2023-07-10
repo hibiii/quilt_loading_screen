@@ -3,7 +3,7 @@ plugins {
 	alias libs.plugins.quilt.loom
 	alias libs.plugins.quilt.licenser
 	alias libs.plugins.minotaur
-	alias libs.plugins.machete
+	//alias libs.plugins.machete
 }
 
 archivesBaseName = 'quilt_loading_screen'

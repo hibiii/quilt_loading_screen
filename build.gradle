@@ -7,7 +7,7 @@ plugins {
 }
 
 archivesBaseName = 'quilt_loading_screen'
-version = "5.0.0+${libs.versions.minecraft.get()}"
+version = "6.0.0+${libs.versions.minecraft.get()}"
 
 repositories {
 	exclusiveContent {

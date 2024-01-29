@@ -13,7 +13,7 @@ import net.minecraft.client.util.ColorUtil;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 import org.quiltmc.qsl.resource.loader.api.ResourceLoader;
-import org.quiltmc.qsl.resource.loader.api.ResourcePackActivationType;
+import org.quiltmc.qsl.resource.loader.api.PackActivationType;
 
 import static com.emmacypress.quilt_loading_screen.QuiltLoadingScreen.MODID;
 import static com.emmacypress.quilt_loading_screen.QuiltLoadingScreen.id;
@@ -26,7 +26,7 @@ public class QLSClientInit implements ClientModInitializer {
 	public void onInitializeClient(ModContainer mod) {
 		MidnightConfig.init(MODID, Config.class);
 
-		ResourceLoader.registerBuiltinResourcePack(id("quilt-ui"), mod, ResourcePackActivationType.NORMAL);
+		ResourceLoader.registerBuiltinPack(id("quilt-ui"), mod, PackActivationType.NORMAL);
 
 		if (Config.modifyBackgroundColor)
 			SplashOverlayAccessor.setMojangRed(ColorUtil.ARGB32.getArgb(0, 35, 22, 56));

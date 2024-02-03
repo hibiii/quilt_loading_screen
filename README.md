@@ -7,3 +7,7 @@ Makes the Minecraft loading screen look like the banner of the QuiltMC Community
 ![Screenshot of Loading Screen](https://cdn.modrinth.com/data/VPU6VYVP/images/009b7d8d6e8bf04968a29421117c59b3efe2351a.png)
 
 Includes the Quilt UI resource pack (disabled by default) by [Oliver-makes-code](https://github.com/Oliver-makes-code), big thanks to them for giving their blessing!
+
+## Cloning and building
+
+This repo has submodules. To properly clone it, you must run `git submodule update --init --recursive`. Additionally, this repo does not include the Gradle Wrapper. If it's required for editor integration, please include `/gradle/wrapper/`, `/gradlew`, `/gradlew.bat` in your `.git/info/exclude`.

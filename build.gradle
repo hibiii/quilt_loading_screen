@@ -31,7 +31,7 @@ dependencies {
 	modImplementation libs.midnightlib
 	include libs.midnightlib
 
-	modLocalRuntime libs.mod.menu
+	modImplementation libs.mod.menu
 }
 
 // TEMPORARY: until https://github.com/QuiltMC/quilt-loom/issues/28 gets fixed

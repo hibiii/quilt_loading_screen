@@ -28,7 +28,8 @@
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
-			"client_init": "com.emmacypress.quilt_loading_screen.QLSClientInit"
+			"client_init": "com.emmacypress.quilt_loading_screen.QLSClientInit",
+			"modmenu": "com.emmacypress.quilt_loading_screen.ModMenuInteg"
 		},
 		"depends": [
 			"minecraft",

@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2021, 2022, 2023 darkerbit
  * Copyright (c) 2021, 2022, 2023 triphora
+ * Copyright (c) 2024 hibi
  *
  * Quilt Loading Screen is under the MIT License. See LICENSE for details.
  */

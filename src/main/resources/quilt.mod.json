@@ -11,16 +11,14 @@
 			"name": "Quilt Loading Screen",
 			"description": "Makes the Minecraft loading screen have QuiltMC patches",
 			"contributors": {
-				"triphora": "Owner",
+				"hibi": "Owner",
+				"triphora": "Previous Maintainer",
 				"darkerbit": "Original Author"
 			},
 			"contact": {
-				"email": "emmaffle@modrinth.com",
 				"homepage": "https://modrinth.com/mod/quilt-loading-screen",
-				"issues": "https://codeberg.org/emmods/quilt_loading_screen/issues",
-				"sources": "https://codeberg.org/emmods/quilt_loading_screen",
-				"discord": "https://discord.gg/EES4w9qbtk",
-				"donate": "https://github.com/sponsors/triphora"
+				"issues": "https://github.com/hibiii/quilt_loading_screen/issues",
+				"sources": "https://github.com/hibiii/quilt_loading_screen"
 			},
 			"license": "MIT",
 			"icon": "assets/quilt_loading_screen/icon.png"
@@ -52,8 +50,6 @@
 	},
 	"modmenu": {
 		"links": {
-			"quilt_loading_screen.support": "https://github.com/sponsors/triphora",
-			"modmenu.discord": "https://discord.gg/EES4w9qbtk",
 			"modmenu.modrinth": "https://modrinth.com/mod/quilt-loading-screen"
 		}
 	}
